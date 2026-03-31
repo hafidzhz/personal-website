@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  // DYNAMIC CURSOR TRACKING
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 50 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 50 });
+
+  const handleMouseMove = (e) => {
+      const { left, top } = e.currentTarget.getBoundingClientRect();
+      mouseX.set(e.clientX - left);
+      mouseY.set(e.clientY - top);
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -30,12 +43,24 @@ const Navbar = () => {
         <motion.div 
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
+          onMouseMove={handleMouseMove}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
           className={`
-            apple-glass pointer-events-auto
+            apple-glass pointer-events-auto relative overflow-hidden
             flex items-center justify-between gap-12 px-8 md:px-10 py-4 transition-all duration-700 rounded-full w-auto max-w-fit mx-auto
             ${isScrolled ? 'scale-95 translate-y-2' : ''}
           `}
         >
+          {/* CURSOR SPOTLIGHT EFFECT */}
+          <motion.div 
+            style={{
+                left: springX,
+                top: springY,
+                opacity: isHovered ? 1 : 0
+            }}
+            className="absolute -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gradient-to-br from-white/[0.08] to-transparent blur-[60px] pointer-events-none z-0 transition-opacity duration-500"
+          />
           <Link to="/" className="font-body font-bold text-2xl md:text-3xl text-white tracking-tightest group flex items-center gap-3 shrink-0">
               <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"></div>
               Hafidz<span className="text-secondary italic group-hover:animate-pulse">.</span>
