@@ -2,9 +2,7 @@ import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const Hero = () => {
-    const { scrollY } = useScroll();
-    const yParallax = useTransform(scrollY, [0, 500], [0, 100]);
-    const opacityFade = useTransform(scrollY, [0, 400], [1, 0]);
+
 
     return (
         <section 
@@ -48,7 +46,6 @@ const Hero = () => {
                 <div className="flex flex-col items-center text-center space-y-16">
                     
                     <motion.header 
-                        style={{ y: yParallax, opacity: opacityFade }}
                         className="space-y-12 w-full flex flex-col items-center"
                     >
                         <div className="relative pt-12 md:pt-20">
@@ -62,11 +59,22 @@ const Hero = () => {
                                 <span className="text-secondary italic font-extralight opacity-80">Wahyu</span>
                             </motion.h1>
 
-                            <motion.div 
+                             <motion.div 
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.8, duration: 1.5 }}
+                                className="flex items-center justify-center gap-10 mt-12 mb-10"
+                             >
+                                <div className="h-[1px] w-12 bg-primary/40 hidden sm:block"></div>
+                                <span className="font-body text-xs sm:text-sm text-primary uppercase tracking-[0.6em] sm:tracking-[0.8em]">Senior Backend Engineer</span>
+                                <div className="h-[1px] w-12 bg-primary/40 hidden sm:block"></div>
+                             </motion.div>
+
+                             <motion.div 
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: 1 }}
                                 transition={{ delay: 0.5, duration: 1.5, ease: "circOut" }}
-                                className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mt-12"
+                                className="h-[1px] w-full bg-gradient-to-r from-transparent via-white/10 to-transparent"
                             />
                         </div>
 
@@ -78,45 +86,46 @@ const Hero = () => {
                         >
                             Engineering <span className="text-white not-italic font-semibold">Critical Systems</span> for Distributed Infrastructure. Specialized in High-Throughput Resilience and Sub-Second Latency.
                         </motion.p>
-                    </motion.header>
-
-                    <motion.div 
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 }}
-                    >
-                        <a 
-                            href="#contact"
-                            className="relative px-20 py-8 apple-glass rounded-full font-body font-semibold text-xs text-white uppercase tracking-[0.5em] overflow-hidden group transition-all hover:scale-105 active:scale-95"
+                        <motion.div 
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1 }}
+                            className="mt-16 sm:mt-24"
                         >
-                            <span className="relative z-10">Get in Touch</span>
-                            <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <div className="absolute inset-0 shadow-[0_0_40px_rgba(255,255,255,0.05)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                        </a>
-                    </motion.div>
-
-                    {/* Integrated Maximalist Deck */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-6xl pt-16 md:pt-24 border-t border-white/5">
-                        {[
-                            { label: "Throughput", val: "14.2k", unit: "req/s", color: "text-primary" },
-                            { label: "Stability", val: "99.98%", unit: "uptime", color: "text-secondary" },
-                            { label: "Reach", val: "Global", unit: "distributed", color: "text-white" }
-                        ].map((stat, i) => (
-                            <motion.div 
-                                key={i}
-                                initial={{ y: 30, opacity: 0 }}
-                                animate={{ y: 0, opacity: 1 }}
-                                transition={{ delay: 1.2 + i * 0.1 }}
-                                className="p-8 md:p-10 border border-white/10 bg-white/[0.03] rounded-[2rem] md:rounded-[2.5rem] apple-glass flex flex-col items-center group transition-all duration-700"
+                            <a 
+                                href="#contact"
+                                className="relative px-20 py-8 apple-glass rounded-full font-body font-semibold text-xs text-white uppercase tracking-[0.5em] overflow-hidden group transition-all hover:scale-105 active:scale-95"
                             >
-                                <span className="font-body text-[9px] text-white/20 uppercase tracking-[0.4em] mb-4">{stat.label}</span>
-                                <div className="flex flex-col items-center">
-                                    <span className={`font-headline font-bold text-5xl sm:text-6xl md:text-7xl text-white tracking-tighter tabular-nums ${stat.color} drop-shadow-sm`}>{stat.val}</span>
-                                    <span className="font-body text-[10px] text-white/20 uppercase tracking-[0.2em] mt-2 italic">{stat.unit}</span>
+                                <span className="relative z-10">Get in Touch</span>
+                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 shadow-[0_0_40px_rgba(255,255,255,0.05)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            </a>
+                        </motion.div>
+    
+                        <motion.div 
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1.2 }}
+                            className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full max-w-6xl pt-16 md:pt-24 border-t border-white/5"
+                        >
+                            {[
+                                { label: "Throughput", val: "14.2k", unit: "req/s", color: "text-primary" },
+                                { label: "Stability", val: "99.98%", unit: "uptime", color: "text-secondary" },
+                                { label: "Reach", val: "Global", unit: "distributed", color: "text-white" }
+                            ].map((stat, i) => (
+                                <div 
+                                    key={i}
+                                    className="p-8 md:p-10 border border-white/10 bg-white/[0.03] rounded-[2rem] md:rounded-[2.5rem] apple-glass flex flex-col items-center"
+                                >
+                                    <span className="font-body text-[9px] text-white/20 uppercase tracking-[0.4em] mb-4">{stat.label}</span>
+                                    <div className="flex flex-col items-center">
+                                        <span className={`font-headline font-bold text-5xl sm:text-6xl md:text-7xl text-white tracking-tighter tabular-nums ${stat.color} drop-shadow-sm`}>{stat.val}</span>
+                                        <span className="font-body text-[10px] text-white/20 uppercase tracking-[0.2em] mt-2 italic">{stat.unit}</span>
+                                    </div>
                                 </div>
-                            </motion.div>
-                        ))}
-                    </div>
+                            ))}
+                        </motion.div>
+                    </motion.header>
                 </div>
             </div>
 
