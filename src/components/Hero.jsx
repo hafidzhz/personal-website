@@ -98,11 +98,11 @@ const Hero = () => {
                         >
                             <a
                                 href="#contact"
-                                className="relative px-20 py-8 apple-glass rounded-full font-body font-semibold text-xs text-white uppercase tracking-[0.5em] overflow-hidden group transition-all hover:scale-105 active:scale-95"
+                                className="relative px-20 py-8 apple-glass rounded-full font-body font-semibold text-xs text-white uppercase tracking-[0.5em] overflow-hidden group transition-all hover:scale-105 active:scale-95 isolation-auto"
                             >
                                 <span className="relative z-10">Get in Touch</span>
-                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <div className="absolute inset-0 shadow-[0_0_40px_rgba(255,255,255,0.05)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                                <div className="absolute inset-0 shadow-[0_0_40px_rgba(255,255,255,0.05)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
                             </a>
                         </motion.div>
 
