@@ -8,7 +8,7 @@ const arsenal = [
     { name: "NestJS", icon: "nestjs", color: "E0234E" },
     { name: "PostgreSQL", icon: "postgresql", color: "4169E1" },
     { name: "Redis", icon: "redis", color: "FF4438" },
-    { name: "AWS", icon: "amazonaws", color: "FF9900" },
+    { name: "AWS", icon: "amazonwebservices", color: "FF9900" },
     { name: "Docker", icon: "docker", color: "2496ED" },
     { name: "Python", icon: "python", color: "3776AB" },
     { name: "Elasticsearch", icon: "elasticsearch", color: "005571" },
@@ -20,7 +20,7 @@ const TechCard = ({ item, i }) => {
     return (
         <GlassCard
             tilt={true}
-            className="group relative min-h-[180px] md:min-h-[220px] flex flex-col justify-between p-8 md:p-12 transition-all duration-700 cursor-default rounded-[2.5rem] md:rounded-[3rem] border-white/5 hover:border-primary/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transform hover:-translate-y-2"
+            className="group relative min-h-[180px] md:min-h-[220px] flex flex-col justify-between p-8 md:p-12 cursor-default rounded-[2.5rem] md:rounded-[3rem] border-white/5 hover:border-primary/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transition-colors transition-shadow duration-700"
         >
             <div className="flex justify-between items-start relative z-10">
                 <span className="font-body text-[10px] md:text-xs text-white/40 group-hover:text-primary transition-colors tracking-widest uppercase italic">Infrastructure Layer</span>

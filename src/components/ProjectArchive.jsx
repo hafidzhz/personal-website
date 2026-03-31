@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 const ProjectArchive = () => {
     const projects = [
-        { name: "Gold Rewards Engine", role: "Maintainer", id: "treasury-gamification" },
-        { name: "Prenagen AI Platform", role: "Maintainer", id: "prenagen-ai" },
-        { name: "Multi-Site Growth Tracker", role: "Maintainer", id: "morinaga-tumbuh-kembang" },
-        { name: "Hakone Content Engine", role: "Maintainer", id: "hakone-be" },
-        { name: "Dotnet Agnostic Architecture", role: "Owner", id: "dotnet-basecode" },
-        { name: "Promina Growth Tracker", role: "Maintainer", id: "bbdo-promina" },
+        { name: "Gold Rewards Engine", role: "Maintainer", id: "sys-06" },
+        { name: "Prenagen AI Platform", role: "Maintainer", id: "sys-07" },
+        { name: "Multi-Site Growth Tracker", role: "Maintainer", id: "sys-08" },
+        { name: "Hakone Content Engine", role: "Maintainer", id: "sys-09" },
+        { name: "Dotnet Agnostic Architecture", role: "Owner", id: "sys-05" },
+        { name: "Promina Growth Tracker", role: "Maintainer", id: "sys-10" },
     ];
 
     return (
@@ -39,7 +39,7 @@ const ProjectArchive = () => {
                         transition={{ delay: i * 0.05, duration: 0.8 }}
                     >
                         <Link
-                            to={`/projects/${project.id}`}
+                            to={`/node/${project.id}`}
                             className="flex flex-col md:flex-row justify-between items-start md:items-center py-16 md:py-24 border-b border-white/5 group transition-all duration-700 cursor-pointer relative overflow-hidden px-6 md:px-12 rounded-[2rem] hover:bg-white/[0.03]"
                         >
                             <div className="flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center relative z-10">
@@ -59,7 +59,7 @@ const ProjectArchive = () => {
 
             {/* Dynamic CTA */}
             <div className="max-w-screen-2xl mx-auto mt-48 md:mt-64 relative z-10 border-t border-white/5 pt-32">
-                <Link to="/projects" className="group flex flex-col items-start gap-12">
+                <Link to="/archive" className="group flex flex-col items-start gap-12">
                     <motion.div
                         whileHover={{ x: 24 }}
                         transition={{ type: "spring", stiffness: 200 }}

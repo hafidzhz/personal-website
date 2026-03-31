@@ -5,7 +5,7 @@ import GlassCard from './GlassCard';
 
 const ProjectRow = ({ id, title, description, tags, metric, metricLabel, isLast }) => {
     return (
-        <Link to={`/projects/${id}`} className="block">
+        <Link to={`/node/${id}`} className="block">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -52,7 +52,7 @@ const ProjectRow = ({ id, title, description, tags, metric, metricLabel, isLast 
 const SelectedWork = () => {
     const projects = [
         {
-            id: "flash-sale-infrastructure",
+            id: "sys-01",
             title: "Flash Sale Infrastructure",
             description: "Architecting high-availability systems for massive transaction events. Engineering zero-leak distributed concurrency with sub-ms node synchronization.",
             tags: [".NET", "Redis", "AWS SQS", "Postgres", "K6"],
@@ -60,7 +60,7 @@ const SelectedWork = () => {
             metricLabel: "Transactions /sec",
         },
         {
-            id: "clinic-booking-hub",
+            id: "sys-02",
             title: "Clinic Booking Hub",
             description: "Redesigning multi-node scheduling networks serving nationwide healthcare platforms with clinical sub-ms performance resolution.",
             tags: ["Golang", "gRPC", "AWS Mesh", "Redis"],
@@ -68,7 +68,7 @@ const SelectedWork = () => {
             metricLabel: "Latency Resolution /ms",
         },
         {
-            id: "teramedik-cloud",
+            id: "sys-03",
             title: "Teramedik Cloud",
             description: "Modernizing legacy medical infrastructure through a 99%+ cost-efficient cloud SaaS evolution. Restructured 1Bn+ IDR implementations into sub-150k monthly nodes.",
             tags: ["Laravel", "PostgreSQL", "SaaS Architecture"],
