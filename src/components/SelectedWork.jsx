@@ -88,6 +88,95 @@ const NetworkMesh3D = () => {
     );
 };
 
+const ProjectCard = ({ index, id, title, description, tags, metric, metricLabel, nodeBackground }) => {
+    const x = useMotionValue(0);
+    const y = useMotionValue(0);
+
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
+
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
+
+    const handleMouseMove = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const width = rect.width;
+        const height = rect.height;
+        const mouseX = e.clientX - rect.left;
+        const mouseY = e.clientY - rect.top;
+        const xPct = mouseX / width - 0.5;
+        const yPct = mouseY / height - 0.5;
+        x.set(xPct);
+        y.set(yPct);
+    };
+
+    const handleMouseLeave = () => {
+        x.set(0);
+        y.set(0);
+    };
+
+    return (
+        <div className="relative group">
+            {/* 3D Background Artifact */}
+            <div className="absolute inset-0 -inset-x-24 z-0 pointer-events-none">
+                {nodeBackground}
+            </div>
+
+            <motion.div 
+                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                onMouseMove={handleMouseMove}
+                onMouseLeave={handleMouseLeave}
+                className="asymmetric-grid w-full relative z-10 border border-white/5 p-8 md:p-16 bg-[#0a0a0a]/40 backdrop-blur-sm hover:backdrop-blur-[24px] hover:bg-[#0a0a0a]/60 transition-all duration-700 rounded-3xl overflow-hidden perspective-[1200px] shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+            >
+                {/* Dynamic Light Break */}
+                <motion.div 
+                    style={{ 
+                        background: "radial-gradient(circle at center, rgba(255,255,255,0.03) 0%, transparent 80%)",
+                        left: useTransform(mouseXSpring, [-0.5, 0.5], ["-20%", "20%"]),
+                        top: useTransform(mouseYSpring, [-0.5, 0.5], ["-20%", "20%"]),
+                    }}
+                    className="absolute w-[150%] h-[150%] pointer-events-none -z-10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"
+                />
+
+                <div className="col-span-12 lg:col-span-11 space-y-16 md:space-y-32 transition-transform duration-700 group-hover:translate-z-[20px]">
+                    <div className="space-y-8 md:space-y-16">
+                        <div className="flex items-center gap-8">
+                            <span className="font-label text-sm text-primary tracking-[0.8em]">{id}</span>
+                            <div className="h-[1px] flex-grow max-w-[100px] bg-primary/20"></div>
+                        </div>
+                        
+                        <h3 className="font-headline text-4xl md:text-6xl lg:text-[5vw] xl:text-[5.5rem] text-on-surface leading-[0.9] group-hover:text-primary transition-colors duration-700 tracking-tighter uppercase mb-4 translate-z-[40px]">
+                            {title}
+                        </h3>
+                        
+                        <p className="font-body text-lg md:text-2xl text-on-surface-variant leading-relaxed opacity-60 max-w-5xl border-l-2 border-outline-variant/20 pl-8 md:pl-16 translate-z-[10px]">
+                            {description}
+                        </p>
+                    </div>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-48 pt-16 md:pt-32 border-t border-outline-variant/10 translate-z-[30px]">
+                        <div className="space-y-12">
+                            <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Technical Stack</span>
+                            <div className="flex flex-wrap gap-4 p-8 bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                                {tags.map(t => (
+                                    <span key={t} className="px-6 py-2.5 glass-tag font-label text-[10px] text-primary uppercase tracking-[0.2em]">{t}</span>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="space-y-12">
+                            <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Operational Metrics</span>
+                            <div className="space-y-4">
+                                <span className="block font-headline text-6xl md:text-[clamp(4rem,7vw,9rem)] text-on-surface tracking-tighter leading-none">{metric}</span>
+                                <span className="block font-label text-sm text-on-surface-variant/40 uppercase tracking-[0.3em]">{metricLabel}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
 const SelectedWork = () => {
   return (
     <section className="px-6 md:px-12 py-32 md:py-64 bg-surface relative overflow-hidden" id="projects">
@@ -107,95 +196,25 @@ const SelectedWork = () => {
         </div>
 
         <div className="max-w-7xl mx-auto space-y-48 md:space-y-96">
-            {/* Project 01 */}
-            <div className="relative group">
-                {/* 3D Background Artifact */}
-                <div className="absolute inset-0 -inset-x-24 z-0 pointer-events-none">
-                    <SystemNode3D />
-                </div>
+            <ProjectCard 
+                id="01_SYS"
+                title={<>Flash Sale <br />Vouchers</>}
+                description="Engineering high-concurrency voucher systems for massive peak traffic. Optimized for 10k+ concurrent requests with transactional integrity."
+                tags={["Distributed Redis", ".NET SQS", "PostgreSQL"]}
+                metric={<>10k<span className="text-primary text-4xl italic">/sec</span></>}
+                metricLabel="Peak Concurrency"
+                nodeBackground={<SystemNode3D />}
+            />
 
-                <div className="asymmetric-grid w-full relative z-10">
-                    <div className="col-span-12 lg:col-span-11 space-y-16 md:space-y-32">
-                        <div className="space-y-8 md:space-y-16">
-                            <div className="flex items-center gap-8">
-                                <span className="font-label text-sm text-primary tracking-[0.8em]">01_SYS</span>
-                                <div className="h-[1px] flex-grow max-w-[100px] bg-primary/20"></div>
-                            </div>
-                            
-                            <h3 className="font-headline text-4xl md:text-6xl lg:text-[5vw] xl:text-[5.5rem] text-on-surface leading-[0.9] group-hover:text-primary transition-colors duration-700 tracking-tighter uppercase mb-4">
-                                Flash Sale <br />Vouchers
-                            </h3>
-                            
-                            <p className="font-body text-lg md:text-2xl text-on-surface-variant leading-relaxed opacity-60 max-w-5xl border-l-2 border-outline-variant/20 pl-8 md:pl-16">
-                                Engineering high-concurrency voucher systems for massive peak traffic. Optimized for 10k+ concurrent requests with transactional integrity.
-                            </p>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-48 pt-16 md:pt-32 border-t border-outline-variant/10">
-                            <div className="space-y-12">
-                                <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Technical Stack</span>
-                                <div className="flex flex-wrap gap-4 p-8 bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                                    {["Distributed Redis", ".NET SQS", "PostgreSQL"].map(t => (
-                                        <span key={t} className="px-6 py-2.5 glass-tag font-label text-[10px] text-primary uppercase tracking-[0.2em]">{t}</span>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="space-y-12">
-                                <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Operational Metrics</span>
-                                <div className="space-y-4">
-                                    <span className="block font-headline text-6xl md:text-[clamp(4rem,9vw,9rem)] text-on-surface tracking-tighter leading-none">10k<span className="text-primary text-4xl italic">/sec</span></span>
-                                    <span className="block font-label text-sm text-on-surface-variant/40 uppercase tracking-[0.3em]">Peak Concurrency</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            {/* Project 02 */}
-            <div className="relative group">
-                {/* 3D Background Artifact */}
-                <div className="absolute inset-0 -inset-x-24 z-0 pointer-events-none">
-                    <NetworkMesh3D />
-                </div>
-
-                <div className="asymmetric-grid w-full relative z-10">
-                    <div className="col-span-12 lg:col-span-11 space-y-16 md:space-y-32">
-                        <div className="space-y-8 md:space-y-16">
-                            <div className="flex items-center gap-8">
-                                <span className="font-label text-sm text-primary tracking-[0.8em]">02_SYS</span>
-                                <div className="h-[1px] flex-grow max-w-[100px] bg-primary/20"></div>
-                            </div>
-                            
-                            <h3 className="font-headline text-4xl md:text-6xl lg:text-[5vw] xl:text-[5.5rem] text-on-surface leading-[0.9] group-hover:text-primary transition-colors duration-700 tracking-tighter uppercase mb-4">
-                                Clinic <br />Booking Hub
-                            </h3>
-                            
-                            <p className="font-body text-lg md:text-2xl text-on-surface-variant leading-relaxed opacity-60 max-w-5xl border-l-2 border-outline-variant/20 pl-8 md:pl-16">
-                                Scalable scheduling engine serving 300+ clinics with real-time availability and sub-second conflict resolution across high-volume healthcare networks.
-                            </p>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-48 pt-16 md:pt-32 border-t border-outline-variant/10">
-                            <div className="space-y-12">
-                                <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Technical Stack</span>
-                                <div className="flex flex-wrap gap-4 p-8 bg-white/5 backdrop-blur-2xl border border-white/5 rounded-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-                                    {["Postgres + Redis", "AWS Mesh", "gRPC"].map(t => (
-                                        <span key={t} className="px-6 py-2.5 glass-tag font-label text-[10px] text-primary uppercase tracking-[0.2em]">{t}</span>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="space-y-12">
-                                <span className="font-label text-sm md:text-base text-secondary uppercase tracking-[0.4em] block">Performance Benchmark</span>
-                                <div className="space-y-4">
-                                    <span className="block font-headline text-6xl md:text-[9rem] text-on-surface tracking-tighter leading-none">150<span className="text-secondary text-4xl italic">ms</span></span>
-                                    <span className="block font-label text-sm text-on-surface-variant/40 uppercase tracking-[0.3em]">Conflict Resolution Gap</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ProjectCard 
+                id="02_SYS"
+                title={<>Clinic <br />Booking Hub</>}
+                description="Scalable scheduling engine serving 300+ clinics with real-time availability and sub-second conflict resolution across high-volume healthcare networks."
+                tags={["Postgres + Redis", "AWS Mesh", "gRPC"]}
+                metric={<>150<span className="text-secondary text-4xl italic">ms</span></>}
+                metricLabel="Conflict Resolution Gap"
+                nodeBackground={<NetworkMesh3D />}
+            />
         </div>
     </section>
   );
