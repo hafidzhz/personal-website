@@ -61,11 +61,13 @@ export default {
         "on-surface-variant": "#acabaa"
       },
       fontFamily: {
-        "headline": ["Newsreader", "serif"],
-        "body": ["Inter", "sans-serif"],
-        "label": ["Space Grotesk", "sans-serif"]
+        "headline": ["Syne", "sans-serif"],
+        "body": ["Outfit", "sans-serif"],
+        "label": ["Syne", "sans-serif"]
       },
-      borderRadius: { "DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px" },
+      letterSpacing: {
+        "tightest": "-0.06em"
+      },
     },
   },
   plugins: [],

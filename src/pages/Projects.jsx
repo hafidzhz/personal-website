@@ -1,98 +1,63 @@
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const allProjects = [
-  { id: 'sys-01', title: "Flash Sale Vouchers", repo: "Confidential Production System", role: "Backend Engineer", date: "Mar 2026", category: "Fintech / E-commerce" },
-  { id: 'sys-02', title: "Clinic Booking Hub", repo: "Healthcare Management Core", role: "Backend Maintainer", date: "Mar 2026", category: "HealthTech" },
-  { id: 'sys-03', title: "Morinaga Generative AI", repo: "Asset Generation Service", role: "Maintainer", date: "Jan 2026", category: "HealthTech" },
-  { id: 'sys-04', title: "Promina Growth Tracker", repo: "Brand Loyalty Engine", role: "Maintainer", date: "Jan 2026", category: "HealthTech" },
-  { id: 'sys-05', title: "Dotnet Agnostic Architecture", repo: "Personal Architecture Lab", role: "Owner", date: "Dec 2025", category: "Personal Lab" },
-  { id: 'sys-06', title: "Prenagen AI Platform", repo: "AI Context Orchestrator", role: "Maintainer", date: "Apr 2025", category: "AI / Health" },
-  { id: 'sys-07', title: "Medical Symposium Registry", repo: "Medical Infrastructure BE", role: "Maintainer", date: "Jul 2024", category: "HealthTech" },
-  { id: 'sys-08', title: "Activity Audit Engine", repo: "Efficiency Tooling Node", role: "Maintainer", date: "Dec 2023", category: "Internal Tooling" },
-  { id: 'sys-09', title: "Chilgo Content Engine", repo: "Retail Support API", role: "Maintainer", date: "Jul 2023", category: "HealthTech" },
-  { id: 'sys-10', title: "Hakone Content Engine", repo: "Enterprise Logic Core", role: "Maintainer", date: "May 2023", category: "Enterprise" },
-  { id: 'sys-11', title: "B7 Enterprise CMS & Talent Hub", repo: "Enterprise Content API", role: "Maintainer", date: "Mar 2023", category: "Enterprise" },
-  { id: 'sys-12', title: "Gold Rewards Engine", repo: "Gamification Backend Node", role: "Maintainer", date: "Feb 2023", category: "Fintech" },
-  { id: 'sys-13', title: "Multi-Site Growth Tracker", repo: "Growth Calculation API", role: "Maintainer", date: "Feb 2023", category: "HealthTech" },
-  { id: 'sys-14', title: "FKS Reward Engine", repo: "Operational Logic Node", role: "Maintainer", date: "Jan 2023", category: "Enterprise" },
+  { id: 'sys-01', title: "Flash Sale Vouchers", role: "Backend Engineer", stack: [".NET", "Redis", "SQS"], stats: "14.2k req/s", date: "2026" },
+  { id: 'sys-02', title: "Clinic Booking Hub", role: "Backend Engineer", stack: [".NET", "PostgreSQL", "AWS"], stats: "300+ Nodes", date: "2026" },
+  { id: 'sys-03', title: "Morinaga Gen-AI", role: "Backend Engineer", stack: ["Node.js", "Python", "OpenAI"], stats: "99.9% Uptime", date: "2026" },
+  { id: 'sys-04', title: "Promina Tracker", role: "Backend Engineer", stack: ["PHP", "MySQL", "Redis"], stats: "In Progress", date: "2026" },
+  { id: 'sys-05', title: "Agnostic Basecode", role: "Backend Engineer", stack: [".NET", "SOLID", "CQRS"], stats: "Blueprint v4", date: "2025" },
+  { id: 'sys-06', title: "Prenagen AI Hub", role: "Backend Engineer", stack: ["Node.js", "GPT-4", "VectorDB"], stats: "LLM Sync", date: "2025" },
+  { id: 'sys-07', title: "Medical Symposium", role: "Backend Engineer", stack: [".NET", "SignalR", "SQL"], stats: "Real-time", date: "2024" },
+  { id: 'sys-08', title: "Audit Engine", role: "Backend Engineer", stack: ["Go", "Docker", "S3"], stats: "Automation", date: "2023" },
+  { id: 'sys-09', title: "Teramedik Cloud", role: "Backend Engineer", stack: ["Laravel", "PostgreSQL", "SaaS"], stats: "99% Cost Red.", date: "2024" },
+  { id: 'sys-10', title: "Profile Gen-Engine", role: "Backend Engineer", stack: ["Laravel", "Redis", "React", "CI/CD"], stats: "Auto-Sync", date: "2023" },
 ];
 
-const GlassCard = ({ project, i, total }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
+const ArchiveRow = ({ project, index, isLast }) => {
     return (
         <motion.div
-            variants={{
-                hidden: { opacity: 0, y: 50 },
-                visible: { opacity: 1, y: 0 }
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="group relative transform-gpu will-change-transform perspective-[1200px]"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+            className={`group relative py-12 md:py-24 px-6 sm:px-12 md:px-24 hover:bg-white/[0.03] transition-all duration-700 ${!isLast ? 'border-b border-white/5' : ''}`}
         >
-            <Link to={`/projects/${project.id}`} className="block border border-white/10 p-8 md:p-16 bg-[#0a0a0a]/80 backdrop-blur-[40px] saturate-[200%] transition-all duration-700 cursor-pointer h-full relative overflow-hidden group/card shadow-[0_50px_100px_rgba(0,0,0,0.7)] group-hover:border-primary/30">
-                <div className="absolute inset-x-0 inset-y-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 opacity-40 group-hover/card:opacity-100 transition-opacity duration-700 -z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"></div>
-                
-                {/* Dynamic Light Break */}
-                <motion.div 
-                    style={{ 
-                        background: "radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, transparent 80%)",
-                        left: useTransform(mouseXSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                        top: useTransform(mouseYSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                    }}
-                    className="absolute w-[150%] h-[150%] pointer-events-none -z-10 blur-3xl opacity-0 group-hover/card:opacity-100 transition-opacity"
-                />
-
-                <div className="flex justify-between items-start mb-12 relative z-10 transition-transform duration-700 group-hover/card:translate-z-[40px]">
-                    <div className="space-y-2">
-                        <span className="font-label text-xs text-primary tracking-[0.4em] uppercase">{project.category}</span>
-                        <div className="font-label text-[10px] text-on-surface-variant/40 tracking-widest uppercase">Registry_ID: 0{total - i}</div>
-                    </div>
-                    <span className="font-label text-xs md:text-sm text-secondary tracking-widest uppercase border-b border-secondary/20 pb-1">{project.date}</span>
-                </div>
-
-                <div className="mb-12 relative z-10 space-y-8 transition-transform duration-700 group-hover/card:translate-z-[60px]">
-                    <h3 className="font-headline text-3xl md:text-5xl text-on-surface group-hover/card:text-primary transition-colors leading-[0.9] tracking-tightest duration-500 uppercase">{project.title}</h3>
-                    <div className="h-[1px] w-12 bg-white/10 group-hover/card:w-full transition-all duration-1000"></div>
-                </div>
-
-                <div className="flex justify-between items-end mt-auto relative z-10 transition-transform duration-700 group-hover/card:translate-z-[30px]">
+            <Link to={`/projects/${project.id}`} className="flex flex-col lg:grid lg:grid-cols-12 gap-12 items-start lg:items-center">
+                <div className="lg:col-span-8 space-y-10 relative z-10">
                     <div className="flex items-center gap-6">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-ping shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"></div>
-                        <div className="space-y-1">
-                            <span className="font-label text-[10px] text-on-surface-variant uppercase tracking-widest leading-none block">Status: Verified</span>
-                            <span className="font-label text-[8px] text-secondary/40 uppercase tracking-widest leading-none block">Operational Integrity [Pass]</span>
-                        </div>
+                        <span className="font-body text-xs text-primary/40 uppercase tracking-[0.4em] italic">0x{index.toString(16).toUpperCase().padStart(2, '0')}</span>
+                        <div className="h-[1px] w-12 bg-white/5 group-hover:w-24 transition-all duration-700"></div>
+                        <span className="font-body text-[10px] text-white/20 uppercase tracking-[0.2em] sm:tracking-[0.5em]">{project.date}</span>
                     </div>
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/10 flex items-center justify-center group-hover/card:border-primary group-hover/card:bg-primary transition-all duration-700 group/btn">
-                        <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover/card:text-surface transition-colors">arrow_outward</span>
+                    
+                    <div className="space-y-4">
+                        <h3 className="font-body font-semibold text-4xl sm:text-5xl md:text-6xl text-white tracking-tightest leading-tight group-hover:text-primary transition-colors">
+                            {project.title}
+                        </h3>
+                        <p className="font-body text-xs text-white/30 uppercase tracking-[0.4em] italic">{project.role}</p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-4">
+                        {project.stack.map(s => (
+                            <span key={s} className="px-6 py-2 bg-white/5 border border-white/5 font-body text-[10px] text-white/40 uppercase tracking-widest rounded-full">{s}</span>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="lg:col-span-4 flex flex-col items-start lg:items-end text-left lg:text-right space-y-4 self-center">
+                    <span className="font-body text-[10px] text-secondary uppercase tracking-[0.6em] block opacity-30 italic">Registry_Stats</span>
+                    <div className="flex flex-col items-start lg:items-end">
+                        <span className="font-body font-bold text-5xl sm:text-6xl md:text-7xl text-white tracking-tighter leading-none tabular-nums">{project.stats}</span>
+                        <div className="flex items-center gap-3 mt-4 group-hover:gap-6 transition-all duration-700">
+                             <span className="font-body text-xs text-white/20 uppercase tracking-[0.4em] italic">Open Registry</span>
+                             <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-700">
+                                <svg className="w-3 h-3 text-white group-hover:text-black transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                                </svg>
+                             </div>
+                        </div>
                     </div>
                 </div>
             </Link>
@@ -101,52 +66,70 @@ const GlassCard = ({ project, i, total }) => {
 };
 
 function Projects() {
+    const { scrollY } = useScroll();
+    const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
     return (
-    <div className="min-h-screen bg-surface pt-16 pb-32 px-6 md:px-12 font-body relative overflow-hidden">
-            <div className="architectural-grid absolute inset-0 opacity-20 pointer-events-none"></div>
-            <div className="neural-lines z-0 opacity-10"></div>
+        <div className="min-h-screen bg-[#030303] selection:bg-primary/20 overflow-x-hidden">
+            <div className="fixed inset-0 z-0 bg-mesh opacity-40"></div>
+            
+            <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 md:px-24 relative z-10">
+                <header className="pt-32 md:pt-80 pb-16 md:pb-64 relative">
+                    <div className="flex flex-col items-start gap-12">
+                        <Link to="/" className="inline-flex items-center gap-6 font-body text-xs text-primary/60 uppercase tracking-[0.6em] group hover:translate-x-[-10px] transition-transform">
+                             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                             </svg>
+                             Handshake_Return
+                        </Link>
 
-            <div className="max-w-7xl mx-auto relative z-10">
-                <Link
-                    to="/"
-                    className="flex items-center gap-4 text-primary/60 hover:text-primary transition-all font-label text-[10px] md:text-sm uppercase tracking-[0.4em] mb-12 md:mb-32 group"
-                >
-                    <span className="material-symbols-outlined text-lg group-hover:-translate-x-2 transition-transform">
-                        arrow_back
-                    </span>
-                    Return to Core Dashboard
-                </Link>
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
+                                <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
+                                <span className="font-body text-[10px] sm:text-xs text-primary/60 uppercase tracking-[0.4em] sm:tracking-[0.8em]">Project Archives</span>
+                            </div>
+                            
+                            <h1 className="font-body font-semibold text-5xl sm:text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
+                                Project <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Registry.</span>
+                            </h1>
 
-                <header className="mb-24 md:mb-48">
-                    <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl text-on-surface mb-8 md:mb-16 tracking-tightest leading-[0.85] uppercase">
-                        SYSTEM <br /><span className="text-secondary italic">SHOWCASE.</span>
-                    </h1>
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
-                        <span className="font-label text-xs md:text-sm text-secondary tracking-[0.5em] uppercase whitespace-nowrap opacity-60">Operations Registry // 2019 — 2026</span>
-                        <div className="h-[1px] flex-grow bg-outline-variant/10"></div>
-                        <div className="px-6 py-2 border border-primary/20 bg-primary/5">
-                            <span className="font-label text-[10px] text-primary uppercase tracking-[0.3em]">Total Systems: {allProjects.length}.sys</span>
+                            <div className="flex items-center gap-4 opacity-40">
+                                <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">2019 — 2026 Archive</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-16 sm:mt-20 flex flex-col md:flex-row justify-between items-start md:items-end w-full gap-12 sm:gap-16">
+                            <p className="font-body text-xl sm:text-2xl md:text-3xl text-white/40 max-w-2xl italic leading-snug">
+                                Documenting the technical distribution of mission-critical systems and high-performance engineering nodes.
+                            </p>
+                            <div className="space-y-4 md:text-right border-l md:border-l-0 md:border-r border-white/10 pl-8 md:pl-0 md:pr-8 py-2">
+                                 <span className="font-body text-[10px] text-secondary uppercase tracking-[0.6em] block opacity-40 italic">System_Verification</span>
+                                 <span className="font-body font-bold text-4xl text-white tracking-tight leading-none uppercase">VERIFIED</span>
+                            </div>
                         </div>
                     </div>
                 </header>
 
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: { staggerChildren: 0.1 }
-                        }
-                    }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 md:gap-20 perspective-[2000px]"
-                >
+                {/* THE UNIFIED ARCHIVE MONOLITH */}
+                <div className="apple-glass rounded-[2.5rem] md:rounded-[4rem] border-white/5 relative overflow-hidden mb-40 md:mb-80">
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    
                     {allProjects.map((project, i) => (
-                        <GlassCard key={project.id} project={project} i={i} total={allProjects.length} />
+                        <ArchiveRow 
+                            key={project.id} 
+                            project={project} 
+                            index={i}
+                            isLast={i === allProjects.length - 1} 
+                        />
                     ))}
-                </motion.div>
+
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                </div>
             </div>
+
+            {/* Ambient Background Depth */}
+            <div className="fixed top-1/2 -left-1/4 w-[60vw] h-[60vw] bg-primary/5 blur-[160px] rounded-full pointer-events-none opacity-40 -z-10" />
+            <div className="fixed bottom-0 -right-1/4 w-[50vw] h-[50vw] bg-secondary/5 blur-[140px] rounded-full pointer-events-none opacity-30 -z-10" />
         </div>
     );
 }

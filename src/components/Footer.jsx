@@ -1,44 +1,65 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 const Footer = () => {
+    const [time, setTime] = useState(new Date().toLocaleTimeString());
     const currentYear = new Date().getFullYear();
-    
+
+    useEffect(() => {
+        const timer = setInterval(() => setTime(new Date().toLocaleTimeString()), 1000);
+        return () => clearInterval(timer);
+    }, []);
+
     return (
-        <footer className="px-6 md:px-12 py-16 md:py-64 bg-surface text-on-surface relative overflow-hidden border-t border-outline-variant/10">
-            <div className="neural-lines z-0 opacity-20"></div>
-            
-            <div className="max-w-7xl mx-auto relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-24 mb-16 md:mb-48">
-                    <div className="md:col-span-8 space-y-8 md:space-y-16">
-                        <div className="space-y-4 md:space-y-8">
-                            <span className="font-label text-xs md:text-sm text-secondary tracking-[0.5em] uppercase opacity-60 block">Initiate Contact</span>
-                            <h2 className="font-headline text-5xl md:text-9xl text-on-surface leading-[0.8] tracking-tighter">
-                                LET'S BUILD THE <br />
-                                <span className="text-primary italic">FUTURE.</span>
+        <footer className="px-6 md:px-16 py-24 md:py-48 relative overflow-hidden bg-[#030303] border-t border-white/5" id="contact">
+            {/* Massive Background Decorative Identity */}
+            <div className="absolute -bottom-10 left-0 w-full font-body font-bold text-[20vw] md:text-[25vw] leading-none tracking-tightest opacity-[0.02] select-none pointer-events-none italic whitespace-nowrap">
+                Hafidz<span className="text-secondary opacity-20">.</span>
+            </div>
+
+            <div className="max-w-screen-2xl mx-auto relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-24 items-start mb-24 md:mb-64">
+                    <div className="lg:col-span-8 space-y-16">
+                        <div className="space-y-12">
+                            <motion.div 
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                className="flex items-center gap-6"
+                            >
+                                <div className="px-5 py-2 apple-glass rounded-full flex items-center gap-4">
+                                    <div className="w-1.5 h-1.5 bg-primary animate-pulse rounded-full shadow-[0_0_15px_rgba(var(--primary-rgb),0.8)]"></div>
+                                    <span className="font-body text-[10px] text-primary/60 uppercase tracking-[0.4em]">Available for Engineering Projects</span>
+                                </div>
+                            </motion.div>
+                            
+                            <h2 className="font-body font-semibold text-5xl sm:text-7xl md:text-8xl lg:text-[10vw] text-white leading-[0.85] tracking-tightest">
+                                Build the <br />
+                                <span className="text-white/20 font-extralight italic">Future.</span>
                             </h2>
                         </div>
-                        
-                        <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-16">
-                             <a href="mailto:hafidzawaluddin@gmail.com" className="font-headline text-2xl md:text-4xl text-on-surface hover:text-primary transition-all border-b border-outline-variant/20 pb-2">
+
+                        <div className="flex flex-col md:flex-row items-baseline gap-12 group">
+                             <a href="mailto:hafidzawaluddin@gmail.com" className="font-body font-bold text-2xl sm:text-4xl md:text-6xl text-white hover:text-primary transition-all duration-700 border-b border-white/5 hover:border-primary pb-4 tracking-tightest italic break-all sm:break-normal">
                                 hafidzawaluddin@gmail.com
                              </a>
-                             <div className="flex items-center gap-4">
-                                <div className="w-2 h-2 bg-primary rounded-full animate-ping"></div>
-                                <span className="font-label text-[10px] md:text-xs text-primary uppercase tracking-[0.4em]">Available for Engagements</span>
+                             <div className="space-y-2 opacity-40">
+                                <span className="font-body text-[11px] uppercase tracking-[0.4em] block text-white/40 italic">Hafidz Awaluddin Wahyu</span>
                              </div>
                         </div>
                     </div>
 
-                    <div className="md:col-span-4 space-y-12">
-                        <div className="space-y-8">
-                            <span className="font-label text-xs md:text-sm text-secondary tracking-[0.5em] uppercase opacity-40 block">Digital Repositories</span>
-                            <div className="flex flex-col gap-6 md:gap-8">
+                    <div className="lg:col-span-4 space-y-20 lg:text-right">
+                        <div className="space-y-12">
+                            <span className="font-body text-xs text-white/40 tracking-[0.6em] uppercase block">Network_Nodes</span>
+                            <div className="flex flex-col gap-10">
                                 {[
-                                    { name: "GitHub", url: "https://github.com/hafidzhz" },
-                                    { name: "LinkedIn", url: "https://www.linkedin.com/in/hafidzawaluddin/" }
+                                    { name: "GitHub", url: "https://github.com/hafidzhz", id: "0xGH" },
+                                    { name: "LinkedIn", url: "https://www.linkedin.com/in/hafidzawaluddin/", id: "0xLI" }
                                 ].map(l => (
-                                    <a key={l.name} href={l.url} target="_blank" rel="noreferrer" className="font-headline text-3xl md:text-6xl text-on-surface hover:text-primary transition-all flex items-center gap-6 group">
-                                        {l.name} <span className="material-symbols-outlined text-2xl md:text-4xl opacity-20 group-hover:opacity-100 group-hover:translate-x-4 transition-all">arrow_outward</span>
+                                    <a key={l.name} href={l.url} target="_blank" rel="noreferrer" className="group flex flex-col lg:items-end gap-2">
+                                        <div className="font-body font-semibold text-5xl md:text-7xl text-white group-hover:text-primary transition-all tracking-tightest">
+                                            {l.name}
+                                        </div>
                                     </a>
                                 ))}
                             </div>
@@ -46,23 +67,38 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="pt-16 md:pt-32 border-t border-outline-variant/10 flex flex-col md:flex-row justify-between items-start md:items-end gap-12 md:gap-0">
-                    <div className="space-y-4">
-                        <div className="font-headline text-4xl md:text-6xl text-on-surface tracking-tighter">Hafidz.</div>
-                        <p className="font-label text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.3em] md:tracking-[0.5em] leading-relaxed max-w-sm opacity-40">
-                             Backend Engineer & System Performance Specialist. Based in Indonesia.
-                        </p>
+                {/* Ultimate System Footer */}
+                <div className="pt-24 border-t border-white/5 flex flex-col md:grid md:grid-cols-12 gap-16 md:items-end">
+                    <div className="md:col-span-4 space-y-8">
+                        <div className="font-body font-bold text-5xl md:text-7xl text-white tracking-tightest leading-none">
+                            Hafidz<span className="text-secondary italic">.</span>
+                        </div>
+                        <div className="flex items-center gap-6">
+                            <div className="h-[1px] w-12 bg-white/10"></div>
+                            <p className="font-body text-[11px] text-white/30 uppercase tracking-[0.4em] leading-relaxed italic">
+                                Senior Backend Engineer
+                            </p>
+                        </div>
                     </div>
 
-                    <div className="md:text-right space-y-4">
-                         <div className="flex flex-wrap md:justify-end gap-6 md:gap-12 opacity-30">
-                            {["Architecture", "Performance", "Scalability"].map(v => (
-                                <span key={v} className="font-label text-[9px] md:text-[11px] uppercase tracking-[0.3em] underline underline-offset-8 decoration-primary/20">{v}</span>
+                    <div className="md:col-span-4 flex flex-col md:items-center gap-6">
+                        <div className="apple-glass px-10 py-6 rounded-[2rem] flex flex-col md:items-center border border-white/5 group hover:border-primary/20 transition-all">
+                             <span className="font-body text-sm text-white/60 tracking-[0.6em] whitespace-nowrap italic">{time}</span>
+                             <div className="flex items-center gap-3 mt-2">
+                                 <div className="w-1.5 h-1.5 bg-secondary rounded-full shadow-[0_0_10px_rgba(var(--secondary-rgb),0.5)] animate-pulse"></div>
+                                 <span className="font-body text-[10px] text-white/30 uppercase tracking-[0.4em]">Status: System Stable</span>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div className="md:col-span-4 flex flex-col md:items-end gap-10">
+                         <div className="flex flex-wrap md:justify-end gap-6 opacity-20">
+                            {["PostgreSQL", "Redis", ".NET", "AWS", "Go"].map(v => (
+                                <span key={v} className="font-body text-[10px] uppercase tracking-[0.6em]">{v}</span>
                             ))}
                          </div>
-                         <div className="space-y-2">
-                            <span className="font-label text-[10px] md:text-xs text-on-surface-variant uppercase tracking-[0.3em] block">© {currentYear} Hafidz Awaluddin Wahyu</span>
-                            <span className="font-label text-[9px] text-secondary/30 uppercase tracking-[0.2em] block italic">Designed for High Performance Architecture</span>
+                         <div className="space-y-2 md:text-right">
+                             <span className="font-body text-[9px] text-white/30 uppercase tracking-[0.4em] block italic">© {currentYear} Hafidz Awaluddin _ Professional Registry</span>
                          </div>
                     </div>
                 </div>

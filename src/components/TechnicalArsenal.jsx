@@ -1,116 +1,78 @@
 import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import GlassCard from './GlassCard';
 
 const arsenal = [
-  { name: "C# / .NET", icon: "dotnet", color: "adcbda" },
-  { name: "GO", icon: "go", color: "ee7d77" },
-  { name: "TYPESCRIPT", icon: "typescript", color: "f9b148" },
-  { name: "NESTJS", icon: "nestjs", color: "f9b148" },
-  { name: "PHP / LARAVEL", icon: "php", color: "ee7d77" },
-  { name: "PYTHON", icon: "python", color: "adcbda" },
-  { name: "POSTGRESQL", icon: "postgresql", color: "adcbda" },
-  { name: "MYSQL", icon: "mysql", color: "adcbda" },
-  { name: "REDIS", icon: "redis", color: "ee7d77" },
-  { name: "AWS", icon: "amazonwebservices", color: "adcbda" },
-  { name: "DOCKER", icon: "docker", color: "adcbda" },
-  { name: "K6 TESTING", icon: "k6", color: "ee7d77" },
+    { name: "C# / .NET", icon: "dotnet", color: "512BD4" },
+    { name: "Go", icon: "go", color: "00ADD8" },
+    { name: "TypeScript", icon: "typescript", color: "3178C6" },
+    { name: "NestJS", icon: "nestjs", color: "E0234E" },
+    { name: "PostgreSQL", icon: "postgresql", color: "4169E1" },
+    { name: "Redis", icon: "redis", color: "FF4438" },
+    { name: "AWS", icon: "amazonaws", color: "FF9900" },
+    { name: "Docker", icon: "docker", color: "2496ED" },
+    { name: "Python", icon: "python", color: "3776AB" },
+    { name: "Elasticsearch", icon: "elasticsearch", color: "005571" },
+    { name: "Kubernetes", icon: "kubernetes", color: "326CE5" },
+    { name: "K6 Testing", icon: "k6", color: "7D64FF" },
 ];
 
 const TechCard = ({ item, i }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
     return (
-        <motion.div 
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="group relative h-48 md:h-64 flex flex-col justify-between border border-white/10 p-8 transition-all duration-700 cursor-default overflow-hidden perspective-[1000px] backdrop-blur-0 hover:backdrop-blur-[24px] hover:saturate-[180%] hover:bg-[#0a0a0a]/80 shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
+        <GlassCard
+            tilt={true}
+            className="group relative min-h-[180px] md:min-h-[220px] flex flex-col justify-between p-8 md:p-12 transition-all duration-700 cursor-default rounded-[2.5rem] md:rounded-[3rem] border-white/5 hover:border-primary/20 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)] transform hover:-translate-y-2"
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"></div>
-            
-            {/* Dynamic Light Break */}
-            <motion.div 
-                style={{ 
-                    background: "radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 80%)",
-                    left: useTransform(mouseXSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                    top: useTransform(mouseYSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                }}
-                className="absolute w-[150%] h-[150%] pointer-events-none -z-10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-
-            <div className="flex justify-between items-start relative z-10 transition-transform duration-700 group-hover:translate-z-[40px]">
-                <span className="font-label text-[10px] text-primary/40 group-hover:text-primary transition-colors tracking-widest uppercase">Node_{i+1}.sys</span>
-                <img 
-                    src={`https://cdn.simpleicons.org/${item.icon}/${item.color}`} 
-                    alt={item.name} 
-                    className="w-8 h-8 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-20 group-hover:opacity-100"
-                />
+            <div className="flex justify-between items-start relative z-10">
+                <span className="font-body text-[10px] md:text-xs text-white/40 group-hover:text-primary transition-colors tracking-widest uppercase italic">Infrastructure Layer</span>
+                <div className="w-10 h-10 md:w-16 md:h-16 flex items-center justify-center p-2.5 md:p-3 bg-white/[0.03] border border-white/5 rounded-2xl group-hover:bg-primary/10 group-hover:border-primary/20 transition-all duration-700 shadow-sm">
+                    <img
+                        src={`https://cdn.simpleicons.org/${item.icon}/${item.color}`}
+                        alt={item.name}
+                        className="w-full h-full object-contain transition-all duration-700 group-hover:scale-110 filter grayscale group-hover:grayscale-0 group-hover:brightness-110"
+                    />
+                </div>
             </div>
 
-            <div className="space-y-2 relative z-10 transition-transform duration-700 group-hover:translate-z-[60px]">
-                 <div className="h-[1px] w-8 bg-white/10 group-hover:w-full transition-all duration-700"></div>
-                 <h3 className="font-headline text-2xl md:text-3xl text-on-surface group-hover:text-secondary transition-all duration-500 leading-tight uppercase tracking-tightest">
+            <div className="space-y-4 relative z-10">
+                <div className="h-[1px] w-8 bg-white/10 group-hover:w-16 group-hover:bg-primary/40 transition-all duration-700"></div>
+                <h3 className="font-body font-bold text-xl md:text-3xl text-white group-hover:text-primary transition-all duration-500 tracking-tightest leading-none">
                     {item.name}
-                 </h3>
+                </h3>
             </div>
-        </motion.div>
+        </GlassCard>
     );
 };
 
 const TechnicalArsenal = () => {
-  return (
-    <section className="px-6 md:px-12 py-16 md:py-64 bg-surface relative overflow-hidden" id="arsenal">
-        <div className="architectural-grid absolute inset-0 opacity-20 pointer-events-none"></div>
-        <div className="neural-lines z-0 opacity-10"></div>
-        
-        <div className="max-w-7xl mx-auto w-full relative z-10">
-            {/* Massive Header Section */}
-            <div className="flex flex-col md:flex-row items-start md:items-end gap-4 md:gap-16 mb-16 md:mb-48">
-                <h2 className="font-headline text-5xl md:text-7xl lg:text-8xl text-on-surface leading-[0.9] tracking-tighter uppercase">
-                    TECH <br /><span className="text-secondary italic">ARSENAL.</span>
-                </h2>
-                <div className="pb-4 md:pb-12 space-y-4">
-                    <span className="font-label text-xs md:text-sm text-primary tracking-[0.5em] uppercase block">Agnostic Infrastructure // 05</span>
-                    <div className="px-4 py-1.5 bg-primary/5 border border-primary/20 inline-flex items-center gap-4">
-                        <div className="w-1.5 h-1.5 bg-primary animate-pulse"></div>
-                        <span className="font-label text-[9px] text-on-surface tracking-[0.2em] uppercase">Persistent_Stack_Integrity</span>
+    return (
+        <section className="px-4 sm:px-6 md:px-16 py-32 md:py-80 relative overflow-hidden bg-[#030303] scroll-mt-32" id="arsenal">
+            {/* Ambient Bloom */}
+            <div className="absolute -bottom-1/4 -right-1/4 w-[70vw] h-[70vw] bg-secondary/5 blur-[160px] rounded-full pointer-events-none opacity-40" />
+
+            <div className="max-w-screen-2xl mx-auto w-full relative z-10">
+                <div className="flex flex-col items-start gap-12 sm:gap-16 mb-24 md:mb-64">
+                    <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
+                        <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
+                        <span className="font-body text-[10px] sm:text-xs text-primary/60 uppercase tracking-[0.4em] sm:tracking-[0.8em]">Technical Stack</span>
+                    </div>
+
+                    <h2 className="section-title">
+                        System <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Arsenal.</span>
+                    </h2>
+
+                    <div className="flex items-center gap-4 opacity-40">
+                        <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Engineering Registry</span>
                     </div>
                 </div>
-            </div>
 
-            {/* Expansive Grid Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
-                {arsenal.map((item, i) => (
-                    <TechCard key={i} item={item} i={i} />
-                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    {arsenal.map((item, i) => (
+                        <TechCard key={i} item={item} i={i} />
+                    ))}
+                </div>
             </div>
-        </div>
-    </section>
-  );
+        </section>
+    );
 };
 
 export default TechnicalArsenal;
