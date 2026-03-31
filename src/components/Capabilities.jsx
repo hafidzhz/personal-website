@@ -4,7 +4,7 @@ import GlassCard from './GlassCard';
 
 const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
     return (
-        <GlassCard 
+        <GlassCard
             tilt={true}
             className="p-10 md:p-16 lg:p-20 flex flex-col h-full"
         >
@@ -19,11 +19,11 @@ const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
                     <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 flex items-center justify-center p-3 md:p-3.5 bg-white/5 border border-white/5 rounded-2xl shadow-sm group-hover:bg-white/10 transition-colors">
                         {Icon}
                     </div>
-                    <h4 className="font-body font-bold text-2xl md:text-4xl text-white tracking-tightest leading-[1.1]">
+                    <h4 className="font-body font-bold text-lg md:text-2xl text-white tracking-[-0.06em] leading-[1.1]">
                         {title}
                     </h4>
                 </div>
-                
+
                 <ul className="space-y-8 md:space-y-10 relative z-10 flex-grow">
                     {children}
                 </ul>
@@ -33,19 +33,19 @@ const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
 };
 
 const Capabilities = () => {
-  return (
-    <section className="px-4 sm:px-6 md:px-16 py-32 md:py-80 relative overflow-hidden bg-[#030303] scroll-mt-32" id="capabilities">
-        {/* Atmospheric Glow */}
-        <div className="absolute top-1/2 -left-1/4 w-[60vw] h-[60vw] bg-primary/5 blur-[140px] rounded-full pointer-events-none opacity-40" />
+    return (
+        <section className="px-4 sm:px-6 md:px-16 py-32 md:py-80 relative overflow-hidden bg-[#030303] scroll-mt-32" id="capabilities">
+            {/* Atmospheric Glow */}
+            <div className="absolute top-1/2 -left-1/4 w-[60vw] h-[60vw] bg-primary/5 blur-[140px] rounded-full pointer-events-none opacity-40" />
 
-        <div className="max-w-screen-2xl mx-auto relative z-10">
+            <div className="max-w-screen-2xl mx-auto relative z-10">
                 <div className="flex flex-col items-start gap-16 mb-40 md:mb-64">
                     <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
-                         <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
-                         <span className="font-body text-[10px] text-primary/60 uppercase tracking-[0.8em]">Core Capabilities</span>
+                        <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
+                        <span className="font-body text-[10px] text-primary/60 uppercase tracking-[0.8em]">Core Capabilities</span>
                     </div>
-                    
-                    <h2 className="font-body font-semibold text-5xl sm:text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
+
+                    <h2 className="section-title">
                         Mission <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Critical Engineering.</span>
                     </h2>
 
@@ -55,7 +55,7 @@ const Capabilities = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 items-stretch">
-                    <CapabilityCard 
+                    <CapabilityCard
                         title="Load Handling"
                         delay={0.1}
                         icon={
@@ -71,17 +71,17 @@ const Capabilities = () => {
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-[11px] md:text-xs text-white/80 uppercase tracking-[0.1em]">Race Condition Control</p>
                             </div>
-                            <p className="font-body text-lg md:text-xl text-white/40 leading-snug italic">Distributed locking for extreme scaling.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Distributed locking for extreme scaling.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Benchmarking</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic">Continuous K6 validation at peak.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Continuous K6 validation at peak.</p>
                         </li>
                     </CapabilityCard>
 
-                    <CapabilityCard 
+                    <CapabilityCard
                         title={<>Distributed <br />Architecture</>}
                         delay={0.2}
                         icon={
@@ -96,17 +96,17 @@ const Capabilities = () => {
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Message Brokerage</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic">Decoupled Redis & SQS workflows.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Decoupled Redis & SQS workflows.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">System Nodes</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic">Clean architecture optimized growth.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Clean architecture optimized growth.</p>
                         </li>
                     </CapabilityCard>
 
-                    <CapabilityCard 
+                    <CapabilityCard
                         title={<>Database <br />Optimization</>}
                         delay={0.3}
                         icon={
@@ -122,19 +122,19 @@ const Capabilities = () => {
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Index Strategy</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic">Strategic SQL indexing latency reduction.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Strategic SQL indexing latency reduction.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Multi-Tier Caching</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic">Redis tiered strategies for data.</p>
+                            <p className="font-body text-sm md:text-base text-white/40 leading-snug italic">Redis tiered strategies for data.</p>
                         </li>
                     </CapabilityCard>
                 </div>
-        </div>
-    </section>
-  );
+            </div>
+        </section>
+    );
 };
 
 export default Capabilities;

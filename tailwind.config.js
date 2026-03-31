@@ -65,6 +65,9 @@ export default {
         "body": ["Outfit", "sans-serif"],
         "label": ["Syne", "sans-serif"]
       },
+      letterSpacing: {
+        "tightest": "-0.06em"
+      },
     },
   },
   plugins: [],

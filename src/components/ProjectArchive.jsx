@@ -16,11 +16,11 @@ const ProjectArchive = () => {
         <section className="px-6 md:px-16 py-32 md:py-48 relative overflow-hidden bg-[#030303]" id="project-archive">
             <div className="flex flex-col items-start gap-12 mb-24 md:mb-40 relative z-10 max-w-screen-2xl mx-auto">
                 <div className="flex items-center gap-8 overflow-hidden">
-                     <div className="h-[1px] w-24 bg-primary/30"></div>
-                     <span className="font-body text-xs text-primary/60 uppercase tracking-[0.8em]">Archive_Protocol</span>
+                    <div className="h-[1px] w-24 bg-primary/30"></div>
+                    <span className="font-body text-xs text-primary/60 uppercase tracking-[0.8em]">Archive_Protocol</span>
                 </div>
-                
-                <h2 className="font-body font-semibold text-7xl md:text-[8vw] text-white tracking-tightest leading-none">
+
+                <h2 className="section-title">
                     Project <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Registry.</span>
                 </h2>
 
@@ -28,9 +28,9 @@ const ProjectArchive = () => {
                     <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Secondary Registry // 04</span>
                 </div>
             </div>
-            
+
             <div className="max-w-screen-2xl mx-auto border-t border-white/5 relative z-10">
-                    {projects.map((project, i) => (
+                {projects.map((project, i) => (
                     <motion.div
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
@@ -44,7 +44,7 @@ const ProjectArchive = () => {
                         >
                             <div className="flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center relative z-10">
                                 <span className="font-body text-[10px] text-primary/40 group-hover:text-primary transition-all duration-700 uppercase tracking-widest italic">REG_0{i + 1}</span>
-                                <h4 className="font-body font-semibold text-4xl md:text-7xl lg:text-8xl text-white group-hover:text-primary transition-all duration-500 leading-none tracking-tightest">{project.name}</h4>
+                                <h4 className="font-body font-semibold text-2xl sm:text-4xl md:text-5xl text-white group-hover:text-primary transition-all duration-500 leading-none tracking-[-0.06em]">{project.name}</h4>
                             </div>
                             <div className="flex items-center gap-12 mt-10 md:mt-0 relative z-10 opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-12 transition-all duration-700">
                                 <span className="font-body text-[11px] text-secondary uppercase tracking-[0.4em] italic">Open_Log_Entry</span>
@@ -68,7 +68,7 @@ const ProjectArchive = () => {
                         <div className="w-24 h-24 md:w-32 md:h-32 apple-glass rounded-full flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-700">
                             <span className="material-symbols-outlined text-5xl text-primary group-hover:text-[#030303] transition-colors">arrow_right_alt</span>
                         </div>
-                        <span className="font-body font-semibold text-6xl md:text-8xl lg:text-[7vw] text-white group-hover:text-primary leading-[0.85] tracking-tightest transition-all duration-700">
+                        <span className="font-body font-semibold text-4xl md:text-6xl lg:text-[5vw] text-white group-hover:text-primary leading-[0.85] tracking-[-0.06em] transition-all duration-700">
                             Explore <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Full Archive.</span>
                         </span>
                     </motion.div>
