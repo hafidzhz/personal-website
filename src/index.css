@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  background: #030303;
+}
+
 @layer base {
   :root {
     --glass-bg: rgba(14, 14, 14, 0.4);
@@ -62,11 +66,11 @@
 
   /* Ultra-Bold Headlines */
   .headline-xl {
-    @apply font-headline font-extrabold text-[clamp(4rem,15vw,14rem)] leading-[0.8] tracking-[-0.04em] uppercase;
+    @apply font-headline font-extrabold text-[clamp(3.5rem,10vw,10rem)] leading-[0.85] tracking-[-0.04em] uppercase break-words;
   }
 
   .headline-lg {
-    @apply font-headline font-bold text-[clamp(2.5rem,8vw,6rem)] leading-[0.9] tracking-tighter uppercase;
+    @apply font-headline font-bold text-[clamp(2rem,5vw,4.5rem)] leading-[0.9] tracking-tighter uppercase break-words;
   }
 
   /* Dynamic Gradients */
@@ -86,14 +90,8 @@
     filter: blur(100px);
   }
 
-  .grain-overlay {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0.15;
-    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-    mix-blend-mode: overlay;
+  section {
+    @apply scroll-mt-32 md:scroll-mt-48;
   }
 
   /* Scrubber/Registry aesthetics */

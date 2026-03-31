@@ -49,34 +49,38 @@ const Experience = () => {
                     </div>
                 </div>
 
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-10">
                     {history.map((exp, i) => (
                         <motion.div 
                             key={i} 
-                            className="apple-glass p-12 md:p-20 relative transition-transform duration-700 perspective-[1200px] hover:translate-x-4 rounded-[3rem]"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ delay: i * 0.1 }}
+                            className="apple-glass p-8 md:p-16 relative transition-all duration-700 perspective-[1200px] hover:translate-x-2 rounded-[2.5rem] md:rounded-[4rem]"
                         >
-                            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start transition-all duration-700">
-                                <div className="md:col-span-3 space-y-4">
-                                    <span className="font-label text-xs text-primary/40 uppercase tracking-widest">{exp.period}</span>
-                                    <h4 className="font-headline font-bold text-3xl text-secondary group-hover:text-primary transition-colors duration-500 uppercase tracking-tighter">{exp.company}</h4>
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start transition-all duration-700">
+                                <div className="md:col-span-3 space-y-3">
+                                    <span className="font-label text-xs text-primary/40 uppercase tracking-widest block">{exp.period}</span>
+                                    <h4 className="font-headline font-bold text-2xl lg:text-3xl text-secondary group-hover:text-primary transition-colors duration-500 uppercase tracking-tighter leading-tight">{exp.company}</h4>
                                 </div>
 
-                                <div className="md:col-span-6 space-y-8 md:space-y-12">
-                                    <h3 className="headline-lg text-on-surface text-4xl md:text-6xl leading-[0.9] tracking-tighter transition-all duration-700 group-hover:text-primary">{exp.role}</h3>
-                                    <p className="font-body text-xl md:text-2xl text-on-surface/50 leading-tight">
+                                <div className="md:col-span-6 space-y-6 md:space-y-10">
+                                    <h3 className="headline-lg text-on-surface text-3xl md:text-5xl lg:text-6xl leading-none tracking-tighter transition-all duration-700 group-hover:text-primary">{exp.role}</h3>
+                                    <p className="font-body text-lg md:text-xl text-on-surface/50 leading-relaxed max-w-2xl">
                                         {exp.desc}
                                     </p>
-                                    <div className="flex flex-wrap gap-4">
+                                    <div className="flex flex-wrap gap-3">
                                         {exp.tags.map(tag => (
-                                            <span key={tag} className="px-6 py-2 apple-glass font-label text-[10px] text-primary uppercase tracking-widest rounded-full">{tag}</span>
+                                            <span key={tag} className="px-5 py-2 apple-glass font-label text-[9px] md:text-[10px] text-primary/60 uppercase tracking-widest rounded-full">{tag}</span>
                                         ))}
                                     </div>
                                 </div>
 
-                                <div className="md:col-span-3 flex flex-col md:items-end justify-center">
-                                    <div className="flex flex-col items-end gap-3 opacity-20">
-                                        <span className="font-label text-[10px] text-secondary uppercase tracking-[0.4em]">Node_Status: Verified</span>
-                                        <span className="font-label text-[10px] text-primary uppercase tracking-[0.4em]">Protocol: 0{history.length - i}</span>
+                                <div className="md:col-span-3 flex flex-col md:items-end justify-center pt-4 md:pt-0">
+                                    <div className="flex flex-col items-end gap-2 opacity-20 group-hover:opacity-100 transition-opacity duration-1000">
+                                        <span className="font-label text-[9px] text-secondary uppercase tracking-[0.4em]">Node_Authenticated</span>
+                                        <span className="font-label text-[9px] text-primary uppercase tracking-[0.4em]">Shard: 0{history.length - i}</span>
                                     </div>
                                 </div>
                             </div>

@@ -11,7 +11,7 @@ const arsenal = [
   { name: "POSTGRESQL", icon: "postgresql", color: "adcbda" },
   { name: "MYSQL", icon: "mysql", color: "adcbda" },
   { name: "REDIS", icon: "redis", color: "ee7d77" },
-  { name: "AWS", icon: "amazonwebservices", color: "adcbda" },
+  { name: "AWS", icon: "amazonaws", color: "adcbda" },
   { name: "DOCKER", icon: "docker", color: "adcbda" },
   { name: "K6 TESTING", icon: "k6", color: "ee7d77" },
 ];
@@ -52,20 +52,20 @@ const TechCard = ({ item, i }) => {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="apple-glass group relative h-48 md:h-64 flex flex-col justify-between p-8 md:p-10 transition-all duration-700 cursor-default perspective-[1000px] rounded-3xl"
+            className="apple-glass group relative min-h-[160px] md:min-h-[220px] flex flex-col justify-between p-6 md:p-10 transition-all duration-700 cursor-default perspective-[1000px] rounded-[2rem] md:rounded-[3rem]"
         >
             <div className="flex justify-between items-start relative z-10 transition-transform duration-700 group-hover:translate-z-[40px]">
-                <span className="font-label text-[10px] text-primary/40 group-hover:text-primary transition-colors tracking-widest uppercase">Node_{i+1}</span>
+                <span className="font-label text-[9px] text-primary/30 group-hover:text-primary transition-colors tracking-widest uppercase">Node_{i+1}</span>
                 <img 
                     src={`https://cdn.simpleicons.org/${item.icon}/${item.color}`} 
                     alt={item.name} 
-                    className="w-10 h-10 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-20 group-hover:opacity-100"
+                    className="w-8 h-8 md:w-10 md:h-10 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-20 group-hover:opacity-100"
                 />
             </div>
 
             <div className="space-y-4 relative z-10 transition-transform duration-700 group-hover:translate-z-[60px]">
-                 <div className="h-[1px] w-8 bg-white/10 group-hover:w-full transition-all duration-700"></div>
-                 <h3 className="font-headline font-bold text-2xl md:text-3xl text-on-surface group-hover:text-secondary uppercase tracking-tighter">
+                 <div className="h-[1px] w-6 bg-white/10 group-hover:w-full transition-all duration-700"></div>
+                 <h3 className="font-headline font-bold text-xl md:text-2xl text-on-surface group-hover:text-secondary uppercase tracking-tighter leading-none">
                     {item.name}
                  </h3>
             </div>

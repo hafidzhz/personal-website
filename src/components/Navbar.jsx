@@ -36,9 +36,9 @@ const Navbar = () => {
             ${isScrolled ? 'scale-95 translate-y-2' : ''}
           `}
         >
-          <Link to="/" className="font-headline font-bold text-lg md:text-xl text-on-surface tracking-tighter group flex items-center gap-3 shrink-0">
-              <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform"></div>
-              Hafidz Wahyu
+          <Link to="/" className="font-headline font-bold text-xl md:text-2xl text-on-surface tracking-tighter group flex items-center gap-3 shrink-0">
+              <div className="w-2 h-2 bg-primary rounded-full group-hover:scale-150 transition-transform"></div>
+              Hafidz<span className="text-primary group-hover:animate-pulse">.</span>
           </Link>
 
           {/* Desktop Links */}

@@ -1,99 +1,90 @@
-import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const allProjects = [
-  { id: 'sys-01', title: "Flash Sale Vouchers", repo: "Confidential Production System", role: "Backend Engineer", date: "Mar 2026", category: "Fintech / E-commerce" },
-  { id: 'sys-02', title: "Clinic Booking Hub", repo: "Healthcare Management Core", role: "Backend Maintainer", date: "Mar 2026", category: "HealthTech" },
-  { id: 'sys-03', title: "Morinaga Generative AI", repo: "Asset Generation Service", role: "Maintainer", date: "Jan 2026", category: "HealthTech" },
-  { id: 'sys-04', title: "Promina Growth Tracker", repo: "Brand Loyalty Engine", role: "Maintainer", date: "Jan 2026", category: "HealthTech" },
-  { id: 'sys-05', title: "Dotnet Agnostic Architecture", repo: "Personal Architecture Lab", role: "Owner", date: "Dec 2025", category: "Personal Lab" },
-  { id: 'sys-06', title: "Prenagen AI Platform", repo: "AI Context Orchestrator", role: "Maintainer", date: "Apr 2025", category: "AI / Health" },
-  { id: 'sys-07', title: "Medical Symposium Registry", repo: "Medical Infrastructure BE", role: "Maintainer", date: "Jul 2024", category: "HealthTech" },
-  { id: 'sys-08', title: "Activity Audit Engine", repo: "Efficiency Tooling Node", role: "Maintainer", date: "Dec 2023", category: "Internal Tooling" },
-  { id: 'sys-09', title: "Chilgo Content Engine", repo: "Retail Support API", role: "Maintainer", date: "Jul 2023", category: "HealthTech" },
-  { id: 'sys-10', title: "Hakone Content Engine", repo: "Enterprise Logic Core", role: "Maintainer", date: "May 2023", category: "Enterprise" },
-  { id: 'sys-11', title: "B7 Enterprise CMS & Talent Hub", repo: "Enterprise Content API", role: "Maintainer", date: "Mar 2023", category: "Enterprise" },
-  { id: 'sys-12', title: "Gold Rewards Engine", repo: "Gamification Backend Node", role: "Maintainer", date: "Feb 2023", category: "Fintech" },
-  { id: 'sys-13', title: "Multi-Site Growth Tracker", repo: "Growth Calculation API", role: "Maintainer", date: "Feb 2023", category: "HealthTech" },
-  { id: 'sys-14', title: "FKS Reward Engine", repo: "Operational Logic Node", role: "Maintainer", date: "Jan 2023", category: "Enterprise" },
+  { id: 'sys-01', title: "Flash Sale Vouchers", role: "Sr. Backend Engineer", stack: [".NET", "Redis", "SQS"], stats: "14.2k req/s", date: "2026" },
+  { id: 'sys-02', title: "Clinic Booking Hub", role: "Backend Architect", stack: [".NET", "PostgreSQL", "AWS"], stats: "300+ Nodes", date: "2026" },
+  { id: 'sys-03', title: "Morinaga Gen-AI", role: "System Maintainer", stack: ["Node.js", "Python", "OpenAI"], stats: "99.9% Uptime", date: "2026" },
+  { id: 'sys-04', title: "Promina Tracker", role: "Core Developer", stack: ["PHP", "MySQL", "Redis"], stats: "2M+ Users", date: "2026" },
+  { id: 'sys-05', title: "Agnostic Basecode", role: "Lead Architect", stack: [".NET", "SOLID", "CQRS"], stats: "Blueprint v4", date: "2025" },
+  { id: 'sys-06', title: "Prenagen AI Hub", role: "Backend Engineer", stack: ["Node.js", "GPT-4", "VectorDB"], stats: "LLM Sync", date: "2025" },
+  { id: 'sys-07', title: "Medical Symposium", role: "Backend Maintainer", stack: [".NET", "SignalR", "SQL"], stats: "Real-time", date: "2024" },
+  { id: 'sys-08', title: "Audit Engine", role: "Internal Tooling", stack: ["Go", "Docker", "S3"], stats: "Automation", date: "2023" },
 ];
 
-const GlassCard = ({ project, i, total }) => {
+const ProjectCard = ({ project, index }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["7deg", "-7deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-7deg", "7deg"]);
+    const mouseXSpring = useSpring(x, { stiffness: 100, damping: 30 });
+    const mouseYSpring = useSpring(y, { stiffness: 100, damping: 30 });
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
+        x.set((e.clientX - rect.left) / rect.width - 0.5);
+        y.set((e.clientY - rect.top) / rect.height - 0.5);
     };
 
     return (
         <motion.div
-            variants={{
-                hidden: { opacity: 0, y: 50 },
-                visible: { opacity: 1, y: 0 }
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="group relative transform-gpu will-change-transform perspective-[1200px]"
+            initial={{ opacity: 0, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ delay: index * 0.1, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className={`min-h-[400px] md:min-h-[500px] ${index % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'}`}
         >
-            <Link to={`/projects/${project.id}`} className="block border border-white/10 p-8 md:p-16 bg-[#0a0a0a]/80 backdrop-blur-[40px] saturate-[200%] transition-all duration-700 cursor-pointer h-full relative overflow-hidden group/card shadow-[0_50px_100px_rgba(0,0,0,0.7)] group-hover:border-primary/30">
-                <div className="absolute inset-x-0 inset-y-0 bg-gradient-to-br from-white/10 via-transparent to-black/20 opacity-40 group-hover/card:opacity-100 transition-opacity duration-700 -z-10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.2)]"></div>
+            <Link to={`/projects/${project.id}`} 
+                onMouseMove={handleMouseMove}
+                onMouseLeave={() => { x.set(0); y.set(0); }}
+                className="group block h-full relative apple-glass p-10 md:p-14 overflow-hidden rounded-[3rem] perspective-[1500px]"
+            >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                 
-                {/* Dynamic Light Break */}
-                <motion.div 
-                    style={{ 
-                        background: "radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, transparent 80%)",
-                        left: useTransform(mouseXSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                        top: useTransform(mouseYSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                    }}
-                    className="absolute w-[150%] h-[150%] pointer-events-none -z-10 blur-3xl opacity-0 group-hover/card:opacity-100 transition-opacity"
-                />
-
-                <div className="flex justify-between items-start mb-12 relative z-10 transition-transform duration-700 group-hover/card:translate-z-[40px]">
-                    <div className="space-y-2">
-                        <span className="font-label text-xs text-primary tracking-[0.4em] uppercase">{project.category}</span>
-                        <div className="font-label text-[10px] text-on-surface-variant/40 tracking-widest uppercase">Registry_ID: 0{total - i}</div>
-                    </div>
-                    <span className="font-label text-xs md:text-sm text-secondary tracking-widest uppercase border-b border-secondary/20 pb-1">{project.date}</span>
-                </div>
-
-                <div className="mb-12 relative z-10 space-y-8 transition-transform duration-700 group-hover/card:translate-z-[60px]">
-                    <h3 className="font-headline text-3xl md:text-5xl text-on-surface group-hover/card:text-primary transition-colors leading-[0.9] tracking-tightest duration-500 uppercase">{project.title}</h3>
-                    <div className="h-[1px] w-12 bg-white/10 group-hover/card:w-full transition-all duration-1000"></div>
-                </div>
-
-                <div className="flex justify-between items-end mt-auto relative z-10 transition-transform duration-700 group-hover/card:translate-z-[30px]">
-                    <div className="flex items-center gap-6">
-                        <div className="w-2 h-2 bg-primary rounded-full animate-ping shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"></div>
-                        <div className="space-y-1">
-                            <span className="font-label text-[10px] text-on-surface-variant uppercase tracking-widest leading-none block">Status: Verified</span>
-                            <span className="font-label text-[8px] text-secondary/40 uppercase tracking-widest leading-none block">Operational Integrity [Pass]</span>
+                {/* 3D Content Container */}
+                <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="h-full flex flex-col justify-between">
+                    <div className="space-y-12 translate-z-[40px]">
+                        <div className="flex justify-between items-start">
+                            <div className="space-y-4">
+                                <span className="font-label text-[10px] text-primary tracking-[0.6em] uppercase block">Registry_ID: 0x{index.toString(16).toUpperCase()}</span>
+                                <div className="h-[2px] w-12 bg-primary/20 group-hover:w-full transition-all duration-1000"></div>
+                            </div>
+                            <span className="font-headline font-bold text-4xl text-on-surface opacity-10 uppercase italic">{project.date}</span>
+                        </div>
+                        
+                        <div className="space-y-6">
+                            <h3 className="font-headline font-bold text-4xl md:text-6xl text-on-surface group-hover:text-primary transition-colors duration-500 leading-[0.9] tracking-tighter uppercase">
+                                {project.title}
+                            </h3>
+                            <p className="font-label text-xs text-on-surface/40 uppercase tracking-widest">{project.role}</p>
                         </div>
                     </div>
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/10 flex items-center justify-center group-hover/card:border-primary group-hover/card:bg-primary transition-all duration-700 group/btn">
-                        <span className="material-symbols-outlined text-3xl text-on-surface-variant group-hover/card:text-surface transition-colors">arrow_outward</span>
+
+                    <div className="space-y-10 translate-z-[60px]">
+                        <div className="flex flex-wrap gap-3">
+                            {project.stack.map(s => (
+                                <span key={s} className="px-4 py-1.5 border border-white/5 rounded-full font-label text-[9px] text-on-surface/30 uppercase tracking-widest bg-white/[0.02]">{s}</span>
+                            ))}
+                        </div>
+                        
+                        <div className="flex justify-between items-end border-t border-white/5 pt-10">
+                            <div className="space-y-2">
+                                <span className="font-label text-[9px] text-secondary uppercase tracking-[0.4em] block">Benchmarking</span>
+                                <p className="font-headline font-bold text-2xl text-on-surface tracking-tighter">{project.stats}</p>
+                            </div>
+                            <div className="w-16 h-16 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all duration-700">
+                                <span className="material-symbols-outlined text-on-surface group-hover:text-black">arrow_forward_ios</span>
+                            </div>
+                        </div>
                     </div>
+                </motion.div>
+
+                {/* Industrial Overlay */}
+                <div className="absolute top-0 right-0 w-32 h-32 opacity-[0.02] pointer-events-none group-hover:opacity-[0.05] transition-opacity">
+                    <svg viewBox="0 0 100 100" className="w-full h-full fill-white">
+                        <path d="M10 10H90V90H10zM20 20V80H80V20z" />
+                    </svg>
                 </div>
             </Link>
         </motion.div>
@@ -101,51 +92,59 @@ const GlassCard = ({ project, i, total }) => {
 };
 
 function Projects() {
+    const { scrollY } = useScroll();
+    const xParallax = useTransform(scrollY, [0, 800], [0, -200]);
+    const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
     return (
-    <div className="min-h-screen bg-surface pt-16 pb-32 px-6 md:px-12 font-body relative overflow-hidden">
-            <div className="architectural-grid absolute inset-0 opacity-20 pointer-events-none"></div>
-            <div className="neural-lines z-0 opacity-10"></div>
+        <div className="min-h-screen bg-[#030303] text-on-surface selection:bg-primary/20 pb-64 overflow-x-hidden">
+            <div className="fixed inset-0 z-0 bg-mesh opacity-40"></div>
+            
+            <div className="max-w-screen-2xl mx-auto px-6 md:px-12 relative z-10">
+                <header className="pt-32 md:pt-48 pb-24 md:pb-64 relative">
+                    <Link to="/" className="inline-flex items-center gap-6 font-label text-[10px] text-primary uppercase tracking-[0.6em] mb-32 hover:translate-x-[-10px] transition-transform">
+                        <span className="material-symbols-outlined text-sm">west</span>
+                        Return_Log: 0x0
+                    </Link>
+                    
+                    <div className="relative">
+                        <motion.h1 
+                            style={{ x: xParallax }}
+                            className="font-headline font-extrabold text-[15vw] leading-none tracking-[-0.06em] uppercase opacity-5 select-none absolute -top-12 -left-12 whitespace-nowrap"
+                        >
+                            Industrial Archive Industrial Archive
+                        </motion.h1>
+                        <h1 className="font-headline font-extrabold text-7xl md:text-[10rem] leading-[0.8] tracking-[-0.05em] uppercase relative z-10 break-words">
+                            Project <br /><span className="text-primary italic">Registry.</span>
+                        </h1>
+                    </div>
 
-            <div className="max-w-7xl mx-auto relative z-10">
-                <Link
-                    to="/"
-                    className="flex items-center gap-4 text-primary/60 hover:text-primary transition-all font-label text-[10px] md:text-sm uppercase tracking-[0.4em] mb-12 md:mb-32 group"
-                >
-                    <span className="material-symbols-outlined text-lg group-hover:-translate-x-2 transition-transform">
-                        arrow_back
-                    </span>
-                    Return to Core Dashboard
-                </Link>
-
-                <header className="mb-24 md:mb-48">
-                    <h1 className="font-headline text-5xl md:text-7xl lg:text-8xl text-on-surface mb-8 md:mb-16 tracking-tightest leading-[0.85] uppercase">
-                        SYSTEM <br /><span className="text-secondary italic">SHOWCASE.</span>
-                    </h1>
-                    <div className="flex flex-col md:flex-row items-start md:items-center gap-8 md:gap-12">
-                        <span className="font-label text-xs md:text-sm text-secondary tracking-[0.5em] uppercase whitespace-nowrap opacity-60">Operations Registry // 2019 — 2026</span>
-                        <div className="h-[1px] flex-grow bg-outline-variant/10"></div>
-                        <div className="px-6 py-2 border border-primary/20 bg-primary/5">
-                            <span className="font-label text-[10px] text-primary uppercase tracking-[0.3em]">Total Systems: {allProjects.length}.sys</span>
+                    <div className="mt-20 flex flex-col md:flex-row justify-between items-start md:items-end gap-12">
+                        <p className="font-body text-xl md:text-3xl text-on-surface/40 max-w-3xl leading-tight tracking-tight">
+                            Documenting the technical distribution of mission-critical systems, distributed architectures, and high-performance engineering nodes developed between 2019 — 2026.
+                        </p>
+                        <div className="space-y-6 md:text-right">
+                             <span className="font-label text-xs text-secondary tracking-[0.5em] uppercase block">Registry Integrity: Verified [OK]</span>
+                             <div className="h-[2px] w-24 md:ml-auto bg-primary"></div>
                         </div>
                     </div>
                 </header>
 
-                <motion.div
-                    initial="hidden"
-                    animate="visible"
-                    variants={{
-                        hidden: { opacity: 0 },
-                        visible: {
-                            opacity: 1,
-                            transition: { staggerChildren: 0.1 }
-                        }
-                    }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 md:gap-20 perspective-[2000px]"
-                >
-                    {allProjects.map((project, i) => (
-                        <GlassCard key={project.id} project={project} i={i} total={allProjects.length} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
+                    {allProjects.map((p, i) => (
+                        <ProjectCard key={p.id} project={p} index={i} />
                     ))}
-                </motion.div>
+                </div>
+            </div>
+
+            {/* Side Registry Nav */}
+            <div className="fixed bottom-12 right-12 z-50 flex flex-col gap-6 items-end group">
+                <div className="flex items-center gap-4 px-6 py-3 apple-glass rounded-full translate-x-20 group-hover:translate-x-0 transition-transform duration-700">
+                    <span className="font-label text-[10px] text-primary uppercase tracking-widest">Total_Entities: {allProjects.length}</span>
+                </div>
+                <div className="w-12 h-12 apple-glass rounded-full flex items-center justify-center cursor-pointer hover:bg-primary group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <span className="material-symbols-outlined text-on-surface group-hover:text-black">stat_1</span>
+                </div>
             </div>
         </div>
     );

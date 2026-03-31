@@ -85,7 +85,7 @@ const ProjectCard = ({ id, title, description, tags, metric, metricLabel, nodeBa
     return (
         <div className="relative group">
             {/* 3D Background Artifact */}
-            <div className="absolute inset-0 -inset-x-32 z-0 pointer-events-none overflow-hidden">
+            <div className="absolute inset-0 -inset-x-0 md:-inset-x-32 z-0 pointer-events-none overflow-hidden opacity-30 md:opacity-100">
                 {nodeBackground}
             </div>
 
@@ -93,37 +93,37 @@ const ProjectCard = ({ id, title, description, tags, metric, metricLabel, nodeBa
                 style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                className="apple-glass p-12 md:p-24 relative z-10 flex flex-col gap-16 md:gap-32 transition-all duration-700 rounded-[4rem] group-hover:bg-[#0a0a0a]/60"
+                className="apple-glass p-8 md:p-16 lg:p-24 relative z-10 flex flex-col gap-12 md:gap-24 transition-all duration-700 rounded-[2.5rem] md:rounded-[4rem] group-hover:bg-[#0a0a0a]/60"
             >
-                <div className="space-y-12 transition-transform duration-700 group-hover:translate-z-[40px]">
-                    <div className="flex items-center gap-8">
-                        <span className="font-label text-sm text-primary tracking-[0.8em]">{id}</span>
-                        <div className="h-[1px] w-32 bg-primary/20"></div>
+                <div className="space-y-8 md:space-y-12 transition-transform duration-700 group-hover:translate-z-[30px]">
+                    <div className="flex items-center gap-6">
+                        <span className="font-label text-xs md:text-sm text-primary tracking-[0.6em]">{id}</span>
+                        <div className="h-[1px] w-20 md:w-32 bg-primary/20"></div>
                     </div>
                     
-                    <h3 className="headline-lg text-on-surface group-hover:text-primary transition-colors">
+                    <h3 className="headline-lg text-on-surface group-hover:text-primary transition-colors leading-[0.9]">
                         {title}
                     </h3>
                     
-                    <p className="font-body text-2xl md:text-3xl text-on-surface/40 leading-tight max-w-5xl group-hover:text-on-surface/80 transition-colors">
+                    <p className="font-body text-xl md:text-2xl lg:text-3xl text-on-surface/40 leading-tight max-w-4xl group-hover:text-on-surface/80 transition-colors">
                         {description}
                     </p>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-32 border-t border-white/5 pt-16 md:pt-32 transition-transform duration-700 group-hover:translate-z-[60px]">
-                    <div className="space-y-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-white/5 pt-12 md:pt-24 transition-transform duration-700 group-hover:translate-z-[50px]">
+                    <div className="space-y-8">
                         <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block">Technical Stack</span>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-3">
                             {tags.map(t => (
-                                <span key={t} className="px-8 py-3 apple-glass font-label text-[10px] text-on-surface uppercase tracking-widest rounded-full">{t}</span>
+                                <span key={t} className="px-6 py-2 apple-glass font-label text-[9px] md:text-[10px] text-on-surface/70 uppercase tracking-widest rounded-full">{t}</span>
                             ))}
                         </div>
                     </div>
-                    <div className="space-y-10">
-                        <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block">Performance Benchmark</span>
+                    <div className="space-y-8">
+                        <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block">Benchmarking</span>
                         <div className="space-y-4">
-                            <span className="block font-headline font-bold text-7xl md:text-9xl text-on-surface tracking-tighter leading-none">{metric}</span>
-                            <span className="block font-label text-[10px] text-on-surface/40 uppercase tracking-[0.3em]">{metricLabel}</span>
+                            <span className="block font-headline font-bold text-6xl md:text-8xl lg:text-9xl text-on-surface tracking-tighter leading-none">{metric}</span>
+                            <span className="block font-label text-[10px] text-on-surface/30 uppercase tracking-[0.3em]">{metricLabel}</span>
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ const ProjectArchive = () => {
                         >
                             <div className="flex flex-col md:flex-row gap-6 md:gap-16 items-start md:items-center relative z-10">
                                 <span className="font-label text-xs text-primary/40 group-hover:text-primary transition-all duration-700 uppercase tracking-widest">NR_{i + 1}</span>
-                                <h4 className="font-headline font-bold text-4xl md:text-6xl text-on-surface group-hover:text-secondary group-hover:italic transition-all duration-500 leading-none uppercase tracking-tighter">{project.name}</h4>
+                                <h4 className="font-headline font-bold text-4xl md:text-6xl text-on-surface group-hover:text-secondary transition-all duration-500 leading-none uppercase tracking-tighter">{project.name}</h4>
                             </div>
                             <div className="flex items-center gap-12 mt-10 md:mt-0 relative z-10">
                                 <span className="font-label text-[10px] text-secondary/40 uppercase tracking-[0.4em] opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-12 transition-all duration-700">Open_Log</span>
