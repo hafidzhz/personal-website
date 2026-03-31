@@ -43,12 +43,19 @@ html {
       0 32px 64px -16px rgba(0, 0, 0, 0.8);
     position: relative;
     overflow: hidden;
+    isolation: isolate;
+  }
+
+  .apple-glass,
+  .apple-glass * {
+    border-radius: inherit;
   }
 
   .apple-glass::before {
     content: "";
     position: absolute;
     inset: 0;
+    border-radius: inherit;
     background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
         rgba(255, 255, 255, 0.08) 0%,
         transparent 60%);
