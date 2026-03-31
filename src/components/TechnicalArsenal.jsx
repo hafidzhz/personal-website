@@ -23,8 +23,8 @@ const TechCard = ({ item, i }) => {
     const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
     const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
     const handleMouseMove = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -36,6 +36,10 @@ const TechCard = ({ item, i }) => {
         const yPct = mouseY / height - 0.5;
         x.set(xPct);
         y.set(yPct);
+        
+        // Update local hover light position for CSS
+        e.currentTarget.style.setProperty('--mouse-x', `${(mouseX / width) * 100}%`);
+        e.currentTarget.style.setProperty('--mouse-y', `${(mouseY / height) * 100}%`);
     };
 
     const handleMouseLeave = () => {
@@ -48,32 +52,20 @@ const TechCard = ({ item, i }) => {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="group relative h-48 md:h-64 flex flex-col justify-between border border-white/10 p-8 transition-all duration-700 cursor-default overflow-hidden perspective-[1000px] backdrop-blur-0 hover:backdrop-blur-[24px] hover:saturate-[180%] hover:bg-[#0a0a0a]/80 shadow-[0_20px_40px_rgba(0,0,0,0.5)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.7)]"
+            className="apple-glass group relative h-48 md:h-64 flex flex-col justify-between p-8 md:p-10 transition-all duration-700 cursor-default perspective-[1000px] rounded-3xl"
         >
-            <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 -z-10 shadow-[inset_0_1px_0_rgba(255,255,255,0.15)]"></div>
-            
-            {/* Dynamic Light Break */}
-            <motion.div 
-                style={{ 
-                    background: "radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 80%)",
-                    left: useTransform(mouseXSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                    top: useTransform(mouseYSpring, [-0.5, 0.5], ["-20%", "20%"]),
-                }}
-                className="absolute w-[150%] h-[150%] pointer-events-none -z-10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"
-            />
-
             <div className="flex justify-between items-start relative z-10 transition-transform duration-700 group-hover:translate-z-[40px]">
-                <span className="font-label text-[10px] text-primary/40 group-hover:text-primary transition-colors tracking-widest uppercase">Node_{i+1}.sys</span>
+                <span className="font-label text-[10px] text-primary/40 group-hover:text-primary transition-colors tracking-widest uppercase">Node_{i+1}</span>
                 <img 
                     src={`https://cdn.simpleicons.org/${item.icon}/${item.color}`} 
                     alt={item.name} 
-                    className="w-8 h-8 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-20 group-hover:opacity-100"
+                    className="w-10 h-10 object-contain filter grayscale group-hover:grayscale-0 transition-all duration-700 opacity-20 group-hover:opacity-100"
                 />
             </div>
 
-            <div className="space-y-2 relative z-10 transition-transform duration-700 group-hover:translate-z-[60px]">
+            <div className="space-y-4 relative z-10 transition-transform duration-700 group-hover:translate-z-[60px]">
                  <div className="h-[1px] w-8 bg-white/10 group-hover:w-full transition-all duration-700"></div>
-                 <h3 className="font-headline text-2xl md:text-3xl text-on-surface group-hover:text-secondary transition-all duration-500 leading-tight uppercase tracking-tightest">
+                 <h3 className="font-headline font-bold text-2xl md:text-3xl text-on-surface group-hover:text-secondary uppercase tracking-tighter">
                     {item.name}
                  </h3>
             </div>
@@ -83,27 +75,24 @@ const TechCard = ({ item, i }) => {
 
 const TechnicalArsenal = () => {
   return (
-    <section className="px-6 md:px-12 py-16 md:py-64 bg-surface relative overflow-hidden" id="arsenal">
-        <div className="architectural-grid absolute inset-0 opacity-20 pointer-events-none"></div>
-        <div className="neural-lines z-0 opacity-10"></div>
-        
+    <section className="px-6 md:px-12 py-32 md:py-64 relative overflow-hidden" id="arsenal">
         <div className="max-w-7xl mx-auto w-full relative z-10">
             {/* Massive Header Section */}
-            <div className="flex flex-col md:flex-row items-start md:items-end gap-4 md:gap-16 mb-16 md:mb-48">
-                <h2 className="font-headline text-5xl md:text-7xl lg:text-8xl text-on-surface leading-[0.9] tracking-tighter uppercase">
-                    TECH <br /><span className="text-secondary italic">ARSENAL.</span>
+            <div className="flex flex-col md:flex-row items-baseline gap-4 md:gap-16 mb-24 md:mb-48">
+                <h2 className="headline-lg text-on-surface">
+                    TECH <br /><span className="text-secondary italic">Registry.</span>
                 </h2>
-                <div className="pb-4 md:pb-12 space-y-4">
-                    <span className="font-label text-xs md:text-sm text-primary tracking-[0.5em] uppercase block">Agnostic Infrastructure // 05</span>
-                    <div className="px-4 py-1.5 bg-primary/5 border border-primary/20 inline-flex items-center gap-4">
-                        <div className="w-1.5 h-1.5 bg-primary animate-pulse"></div>
-                        <span className="font-label text-[9px] text-on-surface tracking-[0.2em] uppercase">Persistent_Stack_Integrity</span>
+                <div className="space-y-4">
+                    <span className="font-label text-xs md:text-sm text-primary tracking-[0.5em] uppercase block">Infrastructure // Global_Stack</span>
+                    <div className="px-6 py-2 apple-glass inline-flex items-center gap-4 rounded-full">
+                        <div className="w-2 h-2 bg-primary animate-pulse shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] rounded-full"></div>
+                        <span className="font-label text-[10px] text-on-surface/60 tracking-[0.2em] uppercase">Persistent_Integrity</span>
                     </div>
                 </div>
             </div>
 
             {/* Expansive Grid Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 {arsenal.map((item, i) => (
                     <TechCard key={i} item={item} i={i} />
                 ))}

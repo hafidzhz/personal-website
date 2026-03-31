@@ -25,9 +25,10 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
-      <div className="bg-surface selection:bg-primary/20 grain overflow-x-hidden relative min-h-screen">
+      <div className="bg-surface selection:bg-primary/20 overflow-x-hidden relative min-h-screen">
+        <div className="bg-mesh" />
+        <div className="grain-overlay" />
         <ScrollToTop />
-        <div className="neural-lines"></div>
         <Navbar />
         <main className="relative z-10 pt-20">
           <Routes>

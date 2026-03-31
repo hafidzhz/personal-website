@@ -19,48 +19,42 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const navLinks = [
-    { name: "Portfolio", path: "projects", isAnchor: true },
-    { name: "Services", path: "capabilities", isAnchor: true },
+    { name: "Registry", path: "projects", isAnchor: true },
+    { name: "Capabilities", path: "capabilities", isAnchor: true },
     { name: "Archive", path: "/projects" },
   ];
 
   return (
     <>
-      <nav className="fixed top-6 md:top-8 left-1/2 -translate-x-1/2 z-[100] transition-all duration-700 w-full px-4 md:px-6 flex justify-center">
-        <div className={`
-          flex items-center justify-between md:justify-center gap-6 md:gap-16 px-8 md:px-12 py-3.5 md:py-5 transition-all duration-700 rounded-full w-auto max-w-fit mx-auto
-          backdrop-blur-[24px] saturate-[180%] border relative overflow-hidden
-          ${isScrolled 
-            ? 'bg-[#121212]/70 border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.15)] scale-[0.98]' 
-            : 'bg-white/5 border-white/5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]'
-          }
-        `}>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent -z-10 opacity-50"></div>
-          <Link to="/" className="font-headline text-xl md:text-2xl text-on-surface tracking-tightest group flex items-center gap-3 shrink-0">
-              <div className="w-2 h-2 bg-primary rounded-full group-hover:scale-150 transition-transform shadow-[0_0_15px_rgba(var(--primary-rgb),0.6)]"></div>
-              Hafidz.
+      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full px-6 flex justify-center pointer-events-none">
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className={`
+            apple-glass pointer-events-auto
+            flex items-center justify-between gap-12 px-8 md:px-10 py-4 transition-all duration-700 rounded-full w-auto max-w-fit mx-auto
+            ${isScrolled ? 'scale-95 translate-y-2' : ''}
+          `}
+        >
+          <Link to="/" className="font-headline font-bold text-lg md:text-xl text-on-surface tracking-tighter group flex items-center gap-3 shrink-0">
+              <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform"></div>
+              Hafidz Wahyu
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8 border-l border-outline-variant/10 pl-8">
+          <div className="hidden md:flex items-center gap-10">
               {navLinks.map((link) => {
                   const href = link.isAnchor ? (isHome ? `#${link.path}` : `/#${link.path}`) : link.path;
                   
-                  const linkContent = (
-                    <>
-                      {link.name}
-                      <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
-                    </>
-                  );
-
                   if (link.isAnchor && isHome) {
                     return (
                       <a 
                         key={link.name}
                         href={href}
-                        className="font-label text-[10px] text-on-surface-variant/60 hover:text-primary uppercase tracking-[0.3em] transition-all relative group whitespace-nowrap"
+                        className="font-label text-[10px] text-on-surface-variant/50 hover:text-on-surface uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
                       >
-                        {linkContent}
+                        {link.name}
+                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
                       </a>
                     );
                   }
@@ -69,9 +63,10 @@ const Navbar = () => {
                       <Link 
                           key={link.name}
                           to={href}
-                          className="font-label text-[10px] text-on-surface-variant/60 hover:text-primary uppercase tracking-[0.3em] transition-all relative group whitespace-nowrap"
+                          className="font-label text-[10px] text-on-surface-variant/50 hover:text-on-surface uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
                       >
-                          {linkContent}
+                        {link.name}
+                        <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
                       </Link>
                   );
               })}
@@ -80,13 +75,13 @@ const Navbar = () => {
           {/* Mobile Toggle */}
           <button 
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2 group"
+            className="md:hidden flex flex-col gap-1.5 p-2"
           >
-            <div className={`w-5 h-[1.5px] bg-primary transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></div>
-            <div className={`w-5 h-[1.5px] bg-primary transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-5 h-[1.5px] bg-primary transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[6px]' : ''}`}></div>
+            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></div>
+            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
+            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[6px]' : ''}`}></div>
           </button>
-        </div>
+        </motion.div>
       </nav>
 
       {/* Mobile Drawer Overlay */}
@@ -96,23 +91,23 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-surface/95 backdrop-blur-2xl flex flex-col items-center justify-center p-12"
+            className="fixed inset-0 z-[90] bg-[#030303]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-12"
           >
-            <div className="flex flex-col gap-12 text-center">
+            <div className="flex flex-col gap-8 text-center">
               {navLinks.map((link, i) => {
                 const href = link.isAnchor ? (isHome ? `#${link.path}` : `/#${link.path}`) : link.path;
                 return (
                   <motion.div
                     key={link.name}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1 }}
+                    transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                   >
                     {link.isAnchor && isHome ? (
                       <a 
                         href={href} 
                         onClick={() => setIsOpen(false)}
-                        className="font-headline text-5xl text-on-surface hover:text-primary transition-colors tracking-tighter"
+                        className="headline-lg text-on-surface hover:text-primary transition-colors"
                       >
                         {link.name}
                       </a>
@@ -120,7 +115,7 @@ const Navbar = () => {
                       <Link 
                         to={href}
                         onClick={() => setIsOpen(false)}
-                        className="font-headline text-5xl text-on-surface hover:text-primary transition-colors tracking-tighter"
+                        className="headline-lg text-on-surface hover:text-primary transition-colors"
                       >
                         {link.name}
                       </Link>
@@ -128,12 +123,6 @@ const Navbar = () => {
                   </motion.div>
                 );
               })}
-            </div>
-
-            {/* Bottom Meta */}
-            <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex flex-col items-center gap-6">
-                <div className="w-px h-12 bg-primary/20"></div>
-                <span className="font-label text-[9px] text-primary/40 uppercase tracking-[0.5em] text-center">Backend Engineering Portfolio<br/>System // Showcase</span>
             </div>
           </motion.div>
         )}
