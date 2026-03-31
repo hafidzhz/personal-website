@@ -44,11 +44,11 @@ const TechCard = ({ item, i }) => {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="apple-glass group relative min-h-[220px] flex flex-col justify-between p-10 md:p-12 transition-all duration-700 cursor-default rounded-[3rem] border-white/5 overflow-hidden"
+            className="apple-glass group relative min-h-[180px] md:min-h-[220px] flex flex-col justify-between p-8 md:p-12 transition-all duration-700 cursor-default rounded-[2.5rem] md:rounded-[3rem] border-white/5 overflow-hidden"
         >
             <div className="flex justify-between items-start relative z-10 transition-transform duration-700">
-                <span className="font-body text-xs text-white/40 group-hover:text-primary transition-colors tracking-widest uppercase italic">Node_{String(i+1).padStart(2, '0')}</span>
-                <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center p-3 bg-white/5 rounded-2xl group-hover:bg-white/10 transition-all duration-700 shadow-sm">
+                <span className="font-body text-[10px] md:text-xs text-white/40 group-hover:text-primary transition-colors tracking-widest uppercase italic">Infrastructure Layer</span>
+                <div className="w-10 h-10 md:w-16 md:h-16 flex items-center justify-center p-2.5 md:p-3 bg-white/5 rounded-2xl group-hover:bg-white/10 transition-all duration-700 shadow-sm">
                     <img 
                         src={`https://cdn.simpleicons.org/${item.icon}/${item.color}`} 
                         alt={item.name} 
@@ -59,7 +59,7 @@ const TechCard = ({ item, i }) => {
 
             <div className="space-y-4 relative z-10 transition-transform duration-700">
                  <div className="h-[1px] w-8 bg-white/10 group-hover:w-20 transition-all duration-700"></div>
-                 <h3 className="font-body font-bold text-3xl md:text-4xl text-white tracking-tightest leading-none">
+                 <h3 className="font-body font-bold text-2xl md:text-4xl text-white tracking-tightest leading-none">
                     {item.name}
                  </h3>
             </div>
@@ -72,27 +72,27 @@ const TechCard = ({ item, i }) => {
 
 const TechnicalArsenal = () => {
   return (
-    <section className="px-6 md:px-16 py-64 md:py-80 relative overflow-hidden bg-[#030303]" id="arsenal">
+    <section className="px-4 sm:px-6 md:px-16 py-32 md:py-80 relative overflow-hidden bg-[#030303] scroll-mt-32" id="arsenal">
         {/* Ambient Bloom */}
         <div className="absolute -bottom-1/4 -right-1/4 w-[70vw] h-[70vw] bg-secondary/5 blur-[160px] rounded-full pointer-events-none opacity-40" />
 
         <div className="max-w-screen-2xl mx-auto w-full relative z-10">
-            <div className="flex flex-col items-start gap-16 mb-40 md:mb-64">
-                <div className="flex items-center gap-8 overflow-hidden">
-                     <div className="h-[1px] w-16 bg-primary/30"></div>
-                     <span className="font-body text-xs text-primary/60 uppercase tracking-[0.8em]">Technical_Infrastructure</span>
+            <div className="flex flex-col items-start gap-12 sm:gap-16 mb-24 md:mb-64">
+                <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
+                     <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
+                     <span className="font-body text-[10px] sm:text-xs text-primary/60 uppercase tracking-[0.4em] sm:tracking-[0.8em]">Technical Stack</span>
                 </div>
                 
-                <h2 className="font-body font-semibold text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
+                <h2 className="font-body font-semibold text-5xl sm:text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
                     System <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Arsenal.</span>
                 </h2>
 
                 <div className="flex items-center gap-4 opacity-40">
-                    <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Stack Registry // v.26_Global</span>
+                    <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Engineering Registry</span>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
                 {arsenal.map((item, i) => (
                     <TechCard key={i} item={item} i={i} />
                 ))}

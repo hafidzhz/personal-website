@@ -33,18 +33,18 @@ const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="apple-glass p-16 md:p-20 flex flex-col transition-all duration-700 cursor-default rounded-[4rem] border-white/5 relative h-full group"
+            className="apple-glass p-10 md:p-16 lg:p-20 flex flex-col transition-all duration-700 cursor-default rounded-[2.5rem] md:rounded-[4rem] border-white/5 relative h-full group"
         >
-            <div className="flex items-center gap-8 mb-16 relative z-10 transition-transform duration-700 h-[100px] lg:h-[120px] items-center">
-                <div className="w-14 h-14 md:w-16 md:h-16 flex-shrink-0 flex items-center justify-center p-3.5 bg-white/5 border border-white/5 rounded-2xl shadow-sm group-hover:bg-white/10 transition-colors">
+            <div className="flex items-center gap-6 md:gap-8 mb-12 md:mb-16 relative z-10 transition-transform duration-700 h-[80px] md:h-[100px] lg:h-[120px] items-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 flex items-center justify-center p-3 md:p-3.5 bg-white/5 border border-white/5 rounded-2xl shadow-sm group-hover:bg-white/10 transition-colors">
                     {Icon}
                 </div>
-                <h4 className="font-body font-bold text-3xl md:text-4xl text-white tracking-tightest leading-[1.1]">
+                <h4 className="font-body font-bold text-2xl md:text-4xl text-white tracking-tightest leading-[1.1]">
                     {title}
                 </h4>
             </div>
             
-            <ul className="space-y-10 relative z-10 flex-grow">
+            <ul className="space-y-8 md:space-y-10 relative z-10 flex-grow">
                 {children}
             </ul>
         </motion.div>
@@ -53,27 +53,27 @@ const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
 
 const Capabilities = () => {
   return (
-    <section className="px-6 md:px-16 py-64 md:py-80 relative overflow-hidden bg-[#030303]" id="capabilities">
+    <section className="px-4 sm:px-6 md:px-16 py-32 md:py-80 relative overflow-hidden bg-[#030303] scroll-mt-32" id="capabilities">
         {/* Atmospheric Glow */}
         <div className="absolute top-1/2 -left-1/4 w-[60vw] h-[60vw] bg-primary/5 blur-[140px] rounded-full pointer-events-none opacity-40" />
 
         <div className="max-w-screen-2xl mx-auto relative z-10">
                 <div className="flex flex-col items-start gap-16 mb-40 md:mb-64">
-                    <div className="flex items-center gap-8 overflow-hidden">
-                         <div className="h-[1px] w-16 bg-primary/30"></div>
-                         <span className="font-body text-xs text-primary/60 uppercase tracking-[0.8em]">Core_Competencies</span>
+                    <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
+                         <div className="h-[1px] w-12 sm:w-16 bg-primary/30"></div>
+                         <span className="font-body text-[10px] text-primary/60 uppercase tracking-[0.8em]">Core Capabilities</span>
                     </div>
                     
-                    <h2 className="font-body font-semibold text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
+                    <h2 className="font-body font-semibold text-5xl sm:text-7xl md:text-[8vw] text-white tracking-tightest leading-[0.9]">
                         Mission <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Critical Engineering.</span>
                     </h2>
 
                     <div className="flex items-center gap-4 opacity-40">
-                        <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Registry // v.26.04</span>
+                        <span className="font-body text-sm text-white/40 tracking-[0.4em] uppercase italic">Engineering Registry</span>
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-stretch">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 items-stretch">
                     <CapabilityCard 
                         title="Load Handling"
                         delay={0.1}
@@ -88,17 +88,15 @@ const Capabilities = () => {
                     >
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-primary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_01</span>
-                                <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Race Condition Control</p>
+                                <p className="font-body font-medium text-[11px] md:text-xs text-white/80 uppercase tracking-[0.1em]">Race Condition Control</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Distributed locking for extreme scaling.</p>
+                            <p className="font-body text-lg md:text-xl text-white/40 leading-snug italic">Distributed locking for extreme scaling.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-primary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_02</span>
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Benchmarking</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Continuous K6 validation at peak.</p>
+                            <p className="font-body text-xl text-white/40 leading-snug italic">Continuous K6 validation at peak.</p>
                         </li>
                     </CapabilityCard>
 
@@ -115,17 +113,15 @@ const Capabilities = () => {
                     >
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-secondary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_03</span>
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Message Brokerage</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Decoupled Redis & SQS workflows.</p>
+                            <p className="font-body text-xl text-white/40 leading-snug italic">Decoupled Redis & SQS workflows.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-secondary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_04</span>
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">System Nodes</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Clean architecture optimized growth.</p>
+                            <p className="font-body text-xl text-white/40 leading-snug italic">Clean architecture optimized growth.</p>
                         </li>
                     </CapabilityCard>
 
@@ -143,17 +139,15 @@ const Capabilities = () => {
                     >
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-primary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_05</span>
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Index Strategy</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Strategic SQL indexing latency reduction.</p>
+                            <p className="font-body text-xl text-white/40 leading-snug italic">Strategic SQL indexing latency reduction.</p>
                         </li>
                         <li className="space-y-4">
                             <div className="flex items-center">
-                                <span className="font-body text-[10px] text-primary/40 uppercase tracking-widest w-20 flex-shrink-0">REG_06</span>
                                 <p className="font-body font-medium text-xs text-white/80 uppercase tracking-[0.1em]">Multi-Tier Caching</p>
                             </div>
-                            <p className="font-body text-xl text-white/40 leading-snug italic pl-20">Redis tiered strategies for data.</p>
+                            <p className="font-body text-xl text-white/40 leading-snug italic">Redis tiered strategies for data.</p>
                         </li>
                     </CapabilityCard>
                 </div>
