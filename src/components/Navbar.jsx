@@ -39,7 +39,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full px-6 flex justify-center pointer-events-none">
+      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[9999] w-full px-6 flex justify-center pointer-events-none">
         <motion.div
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -116,7 +116,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-[#030303]/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12"
+            className="fixed inset-0 z-[10000] bg-[#030303]/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12"
           >
             <div className="flex flex-col gap-12 text-center">
               {navLinks.map((link, i) => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import GlassCard from './GlassCard';
+import FloatingParticles from './FloatingParticles';
 
 const Hero = () => {
     return (
@@ -8,8 +9,12 @@ const Hero = () => {
             className="min-h-screen flex flex-col justify-center px-4 md:px-16 py-32 md:py-48 relative overflow-hidden bg-[#030303] selection:bg-primary/30"
             id="hero"
         >
-            {/* PURE 2D ATMOSPHERIC MESH (No 3D) */}
-            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+            {/* ATMOSPHERIC 3D MESH & DRIFTING PARTICLES */}
+            <div className="absolute inset-0 z-10 pointer-events-none">
+                <FloatingParticles />
+            </div>
+
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden opacity-50">
                 {/* Orbital Light Blooms */}
                 <motion.div
                     animate={{
@@ -41,7 +46,7 @@ const Hero = () => {
                 />
             </div>
 
-            <div className="max-w-screen-2xl mx-auto w-full relative z-10 pt-20">
+            <div className="max-w-screen-2xl mx-auto w-full relative z-30 pt-20">
                 <div className="flex flex-col items-center text-center space-y-16">
 
                     <motion.header
