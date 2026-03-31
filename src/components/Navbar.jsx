@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,6 +8,12 @@ const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  // ROBUST SCROLL TRACKING
+  const { scrollY } = useScroll();
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   // DYNAMIC CURSOR TRACKING
   const mouseX = useMotionValue(0);
@@ -20,12 +26,6 @@ const Navbar = () => {
     mouseX.set(e.clientX - left);
     mouseY.set(e.clientY - top);
   };
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   useEffect(() => {
     setIsOpen(false);
@@ -49,7 +49,7 @@ const Navbar = () => {
           className={`
             apple-glass pointer-events-auto relative overflow-hidden
             flex items-center justify-between gap-12 px-8 md:px-10 py-4 transition-all duration-700 rounded-full w-auto max-w-fit mx-auto
-            ${isScrolled ? 'scale-95 translate-y-2' : ''}
+            ${isScrolled ? 'scale-95 translate-y-2 bg-[#030303]/80 border-white/10 shadow-2xl backdrop-blur-2xl' : 'bg-white/[0.03] border-white/5 shadow-none backdrop-blur-md'}
           `}
         >
           {/* CURSOR SPOTLIGHT EFFECT */}
@@ -61,13 +61,13 @@ const Navbar = () => {
             }}
             className="absolute -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-gradient-to-br from-white/[0.08] to-transparent blur-[60px] pointer-events-none z-0 transition-opacity duration-500"
           />
-          <Link to="/" className="font-body font-bold text-2xl md:text-3xl text-white tracking-tightest group flex items-center gap-3 shrink-0">
+          <Link to="/" className="font-body font-bold text-2xl md:text-3xl text-white tracking-tightest group flex items-center gap-3 shrink-0 relative z-10">
             <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"></div>
             Hafidz<span className="text-secondary italic group-hover:animate-pulse">.</span>
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-12">
+          <div className="hidden md:flex items-center gap-12 relative z-10">
             {navLinks.map((link) => {
               const href = link.isAnchor ? (isHome ? `#${link.path}` : `/#${link.path}`) : link.path;
 
@@ -100,7 +100,7 @@ const Navbar = () => {
           {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden flex flex-col gap-1.5 p-2"
+            className="md:hidden flex flex-col gap-1.5 p-2 relative z-10"
           >
             <div className={`w-6 h-[1px] bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></div>
             <div className={`w-6 h-[1px] bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
