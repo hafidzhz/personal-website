@@ -36,13 +36,13 @@ const Navbar = () => {
             ${isScrolled ? 'scale-95 translate-y-2' : ''}
           `}
         >
-          <Link to="/" className="font-headline font-bold text-xl md:text-2xl text-on-surface tracking-tighter group flex items-center gap-3 shrink-0">
-              <div className="w-2 h-2 bg-primary rounded-full group-hover:scale-150 transition-transform"></div>
-              Hafidz<span className="text-primary group-hover:animate-pulse">.</span>
+          <Link to="/" className="font-body font-bold text-2xl md:text-3xl text-white tracking-tightest group flex items-center gap-3 shrink-0">
+              <div className="w-1.5 h-1.5 bg-primary rounded-full group-hover:scale-150 transition-transform shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"></div>
+              Hafidz<span className="text-secondary italic group-hover:animate-pulse">.</span>
           </Link>
 
           {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-10">
+          <div className="hidden md:flex items-center gap-12">
               {navLinks.map((link) => {
                   const href = link.isAnchor ? (isHome ? `#${link.path}` : `/#${link.path}`) : link.path;
                   
@@ -51,7 +51,7 @@ const Navbar = () => {
                       <a 
                         key={link.name}
                         href={href}
-                        className="font-label text-[10px] text-on-surface-variant/50 hover:text-on-surface uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
+                        className="font-body text-[10px] text-white/40 hover:text-white uppercase tracking-[0.4em] transition-all relative group whitespace-nowrap"
                       >
                         {link.name}
                         <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
@@ -63,7 +63,7 @@ const Navbar = () => {
                       <Link 
                           key={link.name}
                           to={href}
-                          className="font-label text-[10px] text-on-surface-variant/50 hover:text-on-surface uppercase tracking-[0.2em] transition-all relative group whitespace-nowrap"
+                          className="font-body text-[10px] text-white/40 hover:text-white uppercase tracking-[0.4em] transition-all relative group whitespace-nowrap"
                       >
                         {link.name}
                         <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-primary transition-all group-hover:w-full"></span>
@@ -77,9 +77,9 @@ const Navbar = () => {
             onClick={() => setIsOpen(!isOpen)}
             className="md:hidden flex flex-col gap-1.5 p-2"
           >
-            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></div>
-            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-5 h-[1px] bg-primary transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[6px]' : ''}`}></div>
+            <div className={`w-6 h-[1px] bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-[6px]' : ''}`}></div>
+            <div className={`w-6 h-[1px] bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
+            <div className={`w-6 h-[1px] bg-white transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[6px]' : ''}`}></div>
           </button>
         </motion.div>
       </nav>
@@ -91,9 +91,9 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-[#030303]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-12"
+            className="fixed inset-0 z-[90] bg-[#030303]/98 backdrop-blur-3xl flex flex-col items-center justify-center p-12"
           >
-            <div className="flex flex-col gap-8 text-center">
+            <div className="flex flex-col gap-12 text-center">
               {navLinks.map((link, i) => {
                 const href = link.isAnchor ? (isHome ? `#${link.path}` : `/#${link.path}`) : link.path;
                 return (
@@ -101,13 +101,13 @@ const Navbar = () => {
                     key={link.name}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ delay: i * 0.1, duration: 0.8, ease: [0.19, 1, 0.22, 1] }}
                   >
                     {link.isAnchor && isHome ? (
                       <a 
                         href={href} 
                         onClick={() => setIsOpen(false)}
-                        className="headline-lg text-on-surface hover:text-primary transition-colors"
+                        className="font-body font-semibold text-5xl md:text-7xl text-white hover:text-primary transition-colors tracking-tightest"
                       >
                         {link.name}
                       </a>
@@ -115,7 +115,7 @@ const Navbar = () => {
                       <Link 
                         to={href}
                         onClick={() => setIsOpen(false)}
-                        className="headline-lg text-on-surface hover:text-primary transition-colors"
+                        className="font-body font-semibold text-5xl md:text-7xl text-white hover:text-primary transition-colors tracking-tightest"
                       >
                         {link.name}
                       </Link>

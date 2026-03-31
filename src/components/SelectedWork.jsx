@@ -1,170 +1,106 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { motion } from 'framer-motion';
 
-const SystemNode3D = () => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-    const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
-    const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
-
-    const handleMouseMove = (event) => {
-        const rect = event.currentTarget.getBoundingClientRect();
-        x.set(event.clientX / rect.width - 0.5);
-        y.set(event.clientY / rect.height - 0.5);
-    };
-
+const ProjectRow = ({ id, title, description, tags, metric, metricLabel, isLast }) => {
     return (
-        <div onMouseMove={handleMouseMove} onMouseLeave={() => { x.set(0); y.set(0); }}
-            className="w-full h-full flex items-center justify-center relative perspective-[1200px] overflow-hidden"
+        <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, ease: [0.19, 1, 0.22, 1] }}
+            className={`flex flex-col lg:grid lg:grid-cols-12 gap-20 items-start py-40 px-12 md:px-24 group hover:bg-white/[0.03] transition-all duration-700 relative ${!isLast ? 'border-b border-white/5' : ''}`}
         >
-            <motion.div style={{ transformStyle: "preserve-3d", rotateX, rotateY }} className="w-full h-full relative flex items-center justify-center opacity-40">
-                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-px bg-primary/20 blur-[1px]"></div>
-                {[...Array(8)].map((_, i) => (
-                    <motion.div 
-                        key={i}
-                        animate={{ rotateZ: 360 }}
-                        transition={{ duration: 40 + i * 10, repeat: Infinity, ease: "linear" }}
-                        className="absolute border border-white/5 rounded-full"
-                        style={{ width: `${600 + i * 200}px`, height: `${600 + i * 200}px` }}
-                    />
-                ))}
-            </motion.div>
-        </div>
-    );
-};
-
-const NetworkMesh3D = () => {
-    return (
-        <div className="w-full h-full flex items-center justify-center relative perspective-[1200px] overflow-hidden">
-            <div className="w-full h-full relative flex items-center justify-center opacity-30">
-                {[...Array(5)].map((_, i) => (
-                    <motion.div 
-                        key={i}
-                        className="absolute border border-secondary/10"
-                        animate={{ scale: [1, 1.5, 1], rotate: [0, 45, 0] }}
-                        transition={{ duration: 20 + i * 5, repeat: Infinity, ease: "easeInOut" }}
-                        style={{ width: `${800 + i * 300}px`, height: `${800 + i * 300}px`, borderRadius: "35%" }}
-                    />
-                ))}
-            </div>
-        </div>
-    );
-};
-
-const ProjectCard = ({ id, title, description, tags, metric, metricLabel, nodeBackground }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        x.set(mouseX / width - 0.5);
-        y.set(mouseY / height - 0.5);
-        
-        e.currentTarget.style.setProperty('--mouse-x', `${(mouseX / width) * 100}%`);
-        e.currentTarget.style.setProperty('--mouse-y', `${(mouseY / height) * 100}%`);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
-    return (
-        <div className="relative group">
-            {/* 3D Background Artifact */}
-            <div className="absolute inset-0 -inset-x-0 md:-inset-x-32 z-0 pointer-events-none overflow-hidden opacity-30 md:opacity-100">
-                {nodeBackground}
-            </div>
-
-            <motion.div 
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-                onMouseMove={handleMouseMove}
-                onMouseLeave={handleMouseLeave}
-                className="apple-glass p-8 md:p-16 lg:p-24 relative z-10 flex flex-col gap-12 md:gap-24 transition-all duration-700 rounded-[2.5rem] md:rounded-[4rem] group-hover:bg-[#0a0a0a]/60"
-            >
-                <div className="space-y-8 md:space-y-12 transition-transform duration-700 group-hover:translate-z-[30px]">
-                    <div className="flex items-center gap-6">
-                        <span className="font-label text-xs md:text-sm text-primary tracking-[0.6em]">{id}</span>
-                        <div className="h-[1px] w-20 md:w-32 bg-primary/20"></div>
-                    </div>
-                    
-                    <h3 className="headline-lg text-on-surface group-hover:text-primary transition-colors leading-[0.9]">
-                        {title}
-                    </h3>
-                    
-                    <p className="font-body text-xl md:text-2xl lg:text-3xl text-on-surface/40 leading-tight max-w-4xl group-hover:text-on-surface/80 transition-colors">
-                        {description}
-                    </p>
+            <div className="lg:col-span-8 space-y-16 relative z-10">
+                <div className="flex items-center gap-6">
+                    <span className="font-body text-xs text-primary/40 uppercase tracking-[0.4em] italic">{id}</span>
+                    <div className="h-[1px] w-12 bg-white/5 group-hover:w-20 transition-all duration-700"></div>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 border-t border-white/5 pt-12 md:pt-24 transition-transform duration-700 group-hover:translate-z-[50px]">
-                    <div className="space-y-8">
-                        <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block">Technical Stack</span>
-                        <div className="flex flex-wrap gap-3">
-                            {tags.map(t => (
-                                <span key={t} className="px-6 py-2 apple-glass font-label text-[9px] md:text-[10px] text-on-surface/70 uppercase tracking-widest rounded-full">{t}</span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="space-y-8">
-                        <span className="font-label text-xs text-secondary uppercase tracking-[0.4em] block">Benchmarking</span>
-                        <div className="space-y-4">
-                            <span className="block font-headline font-bold text-6xl md:text-8xl lg:text-9xl text-on-surface tracking-tighter leading-none">{metric}</span>
-                            <span className="block font-label text-[10px] text-on-surface/30 uppercase tracking-[0.3em]">{metricLabel}</span>
-                        </div>
-                    </div>
+                <h3 className="font-body font-semibold text-5xl md:text-6xl lg:text-7xl text-white tracking-tightest leading-[1.1]">
+                    {title}
+                </h3>
+                
+                <p className="font-body text-2xl md:text-3xl text-white/40 leading-snug max-w-3xl italic group-hover:text-white/60 transition-colors">
+                    {description}
+                </p>
+
+                <div className="flex flex-wrap gap-4 pt-4">
+                    {tags.map(t => (
+                        <span key={t} className="px-6 py-2 bg-white/5 border border-white/5 font-body text-[11px] text-white/50 uppercase tracking-widest rounded-full group-hover:border-primary/20 transition-colors">{t}</span>
+                    ))}
                 </div>
-            </motion.div>
-        </div>
+            </div>
+            
+            <div className="lg:col-span-4 flex flex-col justify-end items-start lg:items-end text-left lg:text-right space-y-6 self-center">
+                <span className="font-body text-[10px] text-secondary uppercase tracking-[0.6em] block opacity-30 italic">Operational_Metric</span>
+                <div className="flex flex-col items-start lg:items-end">
+                    <span className="font-body font-bold text-7xl md:text-9xl text-white tracking-tighter leading-none tabular-nums drop-shadow-lg">{metric}</span>
+                    <span className="font-body text-xs text-white/20 uppercase tracking-[0.4em] mt-3 italic">{metricLabel}</span>
+                </div>
+            </div>
+
+            {/* Hover Indicator */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-primary group-hover:h-1/2 transition-all duration-700" />
+        </motion.div>
     );
 };
 
 const SelectedWork = () => {
+    const projects = [
+        {
+            id: "REG_01",
+            title: "Flash Sale Infrastructure",
+            description: "Architecting high-availability systems for massive transaction events. Engineering zero-leak distributed concurrency with sub-ms node synchronization.",
+            tags: [".NET", "Redis", "AWS SQS", "Postgres", "K6"],
+            metric: "10k",
+            metricLabel: "Transactions /sec",
+        },
+        {
+            id: "REG_02",
+            title: "Clinic Booking Hub",
+            description: "Redesigning multi-node scheduling networks serving nationwide healthcare platforms with clinical sub-ms performance resolution.",
+            tags: ["Golang", "gRPC", "AWS Mesh", "Redis"],
+            metric: "150",
+            metricLabel: "Latency Resolution /ms",
+        }
+    ];
+
     return (
-        <section className="px-6 md:px-12 py-32 md:py-64 relative overflow-hidden" id="projects">
-            <div className="max-w-7xl mx-auto mb-32 md:mb-64">
-                <h2 className="headline-xl text-on-surface mb-8">
-                    SELECTED <br /><span className="text-primary italic">WORKS.</span>
-                </h2>
-                <div className="flex items-center gap-6 opacity-40">
-                    <div className="h-[2px] w-32 bg-primary"></div>
-                    <span className="font-label text-xs md:text-sm text-secondary tracking-[0.5em] uppercase">Archive Registry // 19—26</span>
+        <section className="px-6 md:px-16 py-64 md:py-80 relative overflow-hidden bg-[#030303]" id="projects">
+            {/* Soft Ambient Depth */}
+            <div className="absolute top-1/4 -right-1/4 w-[60vw] h-[60vw] bg-primary/5 blur-[120px] rounded-full pointer-events-none opacity-40" />
+            <div className="absolute bottom-1/4 -left-1/4 w-[50vw] h-[50vw] bg-secondary/5 blur-[140px] rounded-full pointer-events-none opacity-30" />
+
+            <div className="max-w-screen-2xl mx-auto relative z-10">
+                <div className="flex flex-col items-start gap-16 mb-40 md:mb-64">
+                    <div className="flex items-center gap-8 overflow-hidden">
+                         <div className="h-[1px] w-16 bg-primary/30"></div>
+                         <span className="font-body text-[10px] text-primary/60 uppercase tracking-[0.6em]">Work_Registry</span>
+                    </div>
+                    
+                    <h2 className="font-body font-semibold text-6xl md:text-[7vw] text-white tracking-tightest leading-[0.9]">
+                        Selected <br /><span className="text-white/20 italic font-extralight tracking-[-0.04em]">Projects.</span>
+                    </h2>
+
+                    <div className="flex items-center gap-4 opacity-40">
+                        <span className="font-body text-[11px] text-white/40 tracking-[0.4em] uppercase italic">Archive Registry // 19—26</span>
+                    </div>
                 </div>
-            </div>
 
-            <div className="max-w-7xl mx-auto space-y-64 md:space-y-128">
-                <ProjectCard
-                    id="SYS_01"
-                    title={<>Flash Sale <br />Vouchers</>}
-                    description="Redesigning distributed concurrency for high-peak transaction volumes. Zero-leak integrity at scale."
-                    tags={["Distributed Redis", ".NET SQS", "PostgreSQL"]}
-                    metric={<>10k<span className="text-primary text-4xl italic">/sec</span></>}
-                    metricLabel="Peak Concurrent Stream"
-                    nodeBackground={<SystemNode3D />}
-                />
+                {/* THE UNIFIED MONOLITHIC CARD */}
+                <div className="apple-glass rounded-[3rem] border-white/5 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                    
+                    {projects.map((project, i) => (
+                        <ProjectRow 
+                            key={project.id} 
+                            {...project} 
+                            isLast={i === projects.length - 1} 
+                        />
+                    ))}
 
-                <ProjectCard
-                    id="SYS_02"
-                    title={<>Clinic <br />Booking Hub</>}
-                    description="Multi-node scheduling architecture serving nationwide healthcare networks with sub-ms resolution."
-                    tags={["Postgres + Redis", "AWS Mesh", "gRPC"]}
-                    metric={<>150<span className="text-secondary text-4xl italic">ms</span></>}
-                    metricLabel="Resolution Interval Gap"
-                    nodeBackground={<NetworkMesh3D />}
-                />
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                </div>
             </div>
         </section>
     );
