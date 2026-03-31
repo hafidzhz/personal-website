@@ -30,7 +30,8 @@ function App() {
         <div className="relative z-0">
           <div className="bg-mesh" />
         </div>
-        <main className="relative">
+        <Navbar />
+        <main className="relative isolation-isolate">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/archive" element={<Projects />} />
@@ -38,7 +39,6 @@ function App() {
             <Route path="/node/:id" element={<ProjectDetail />} />
           </Routes>
         </main>
-        <Navbar />
         <Footer />
       </div>
     </Router>

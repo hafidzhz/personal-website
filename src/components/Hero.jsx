@@ -46,7 +46,7 @@ const Hero = () => {
                 />
             </div>
 
-            <div className="max-w-screen-2xl mx-auto w-full relative z-30 pt-20">
+            <div className="max-w-screen-2xl mx-auto w-full relative z-20 pt-20">
                 <div className="flex flex-col items-center text-center space-y-16">
 
                     <motion.header
