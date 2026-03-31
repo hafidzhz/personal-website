@@ -31,6 +31,20 @@ const history = [
         desc: "Engineered modular Enterprise Quality Management Systems (QMS) with complex 3rd-party architectural integrations.",
         tags: [".NET", "Enterprise", "Systems"],
     },
+    {
+        period: "2020 — 2022",
+        role: "Web Developer",
+        company: "Terakorp Indonesia",
+        desc: "Architected Teramedik Cloud & Kiosk systems. Designed end-to-end backend logic, optimized relational database performance, and established core engineering guidelines for the team.",
+        tags: ["Laravel", "PHP", "Architecure", "Database"],
+    },
+    {
+        period: "2018 — 2020",
+        role: "Android Developer",
+        company: "Codena",
+        desc: "End-to-end mobile engineering. Developed native Android applications and scaled supporting backend infrastructure.",
+        tags: ["Android", "Fullstack", "Mobile", "Backend"],
+    },
 ];
 
 const Experience = () => {
@@ -71,7 +85,7 @@ const Experience = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
                                     <div className="md:col-span-3 space-y-4">
                                         <span className="font-body text-[10px] text-primary/40 uppercase tracking-[0.4em] block">{exp.period}</span>
-                                        <h4 className="font-body font-bold text-lg text-white group-hover:text-primary transition-colors duration-500 tracking-[-0.06em] leading-tight">{exp.company}</h4>
+                                        <h4 className="font-body font-bold text-3xl md:text-5xl text-white group-hover:text-primary transition-colors duration-500 tracking-tightest leading-none">{exp.company}</h4>
                                     </div>
 
                                     <div className="md:col-span-6 space-y-8">
@@ -81,7 +95,7 @@ const Experience = () => {
                                         </p>
                                         <div className="flex flex-wrap gap-3 pt-4">
                                             {exp.tags.map(tag => (
-                                                <span key={tag} className="px-6 py-2 bg-white/5 border border-white/5 font-body text-[10px] text-white/40 uppercase tracking-[0.3em] rounded-full">{tag}</span>
+                                                <span key={tag} className="px-6 py-2 bg-white/[0.03] backdrop-blur-md border border-white/10 font-body text-[9px] md:text-[10px] text-white/60 group-hover:text-white uppercase tracking-[0.3em] rounded-full hover:bg-primary/20 hover:border-primary/30 transition-all duration-300">{tag}</span>
                                             ))}
                                         </div>
                                     </div>
