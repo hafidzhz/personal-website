@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import GlassCard from './GlassCard';
 
 const history = [
   {
@@ -41,7 +42,7 @@ const Experience = () => {
             <div className="max-w-screen-2xl mx-auto relative z-10">
                 <div className="flex flex-col items-start gap-12 sm:gap-16 mb-24 md:mb-64">
                     <div className="flex items-center gap-6 sm:gap-8 overflow-hidden">
-                         <div className="h-[1px] w-12 sm:w-24 bg-primary/30"></div>
+                         <div className="h snapshot-row-1 snapshot-row-2 h-[1px] w-12 sm:w-24 bg-primary/30"></div>
                          <span className="font-body text-[10px] sm:text-xs text-primary/60 uppercase tracking-[0.4em] sm:tracking-[0.8em]">Career History</span>
                     </div>
                     
@@ -56,36 +57,40 @@ const Experience = () => {
 
                 <div className="space-y-12 md:space-y-20">
                     {history.map((exp, i) => (
-                        <motion.div 
+                        <GlassCard 
                             key={i} 
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, margin: "-50px" }}
-                            transition={{ delay: i * 0.1, duration: 1, ease: [0.19, 1, 0.22, 1] }}
-                            className="apple-glass p-12 md:p-20 relative transition-all duration-700 rounded-[3rem] border-white/5 group"
+                            tilt={true}
+                            className="p-12 md:p-20 relative transition-all duration-700 rounded-[3rem] border-white/5 group overflow-hidden"
                         >
-                            <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
-                                <div className="md:col-span-3 space-y-4">
-                                    <span className="font-body text-[10px] text-primary/40 uppercase tracking-[0.4em] block">{exp.period}</span>
-                                    <h4 className="font-body font-bold text-3xl text-white group-hover:text-primary transition-colors duration-500 tracking-tightest leading-tight">{exp.company}</h4>
-                                </div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ delay: i * 0.1, duration: 1, ease: [0.19, 1, 0.22, 1] }}
+                            >
+                                <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+                                    <div className="md:col-span-3 space-y-4">
+                                        <span className="font-body text-[10px] text-primary/40 uppercase tracking-[0.4em] block">{exp.period}</span>
+                                        <h4 className="font-body font-bold text-3xl text-white group-hover:text-primary transition-colors duration-500 tracking-tightest leading-tight">{exp.company}</h4>
+                                    </div>
 
-                                <div className="md:col-span-6 space-y-8">
-                                    <h3 className="font-body font-semibold text-5xl md:text-7xl text-white leading-none tracking-tightest">{exp.role}</h3>
-                                    <p className="font-body text-xl md:text-2xl text-white/40 leading-snug max-w-2xl italic group-hover:text-white/60 transition-colors">
-                                        {exp.desc}
-                                    </p>
-                                    <div className="flex flex-wrap gap-3 pt-4">
-                                        {exp.tags.map(tag => (
-                                            <span key={tag} className="px-6 py-2 bg-white/5 border border-white/5 font-body text-[10px] text-white/40 uppercase tracking-[0.3em] rounded-full">{tag}</span>
-                                        ))}
+                                    <div className="md:col-span-6 space-y-8">
+                                        <h3 className="font-body font-semibold text-5xl md:text-7xl text-white leading-none tracking-tightest">{exp.role}</h3>
+                                        <p className="font-body text-xl md:text-2xl text-white/40 leading-snug max-w-2xl italic group-hover:text-white/60 transition-colors">
+                                            {exp.desc}
+                                        </p>
+                                        <div className="flex flex-wrap gap-3 pt-4">
+                                            {exp.tags.map(tag => (
+                                                <span key={tag} className="px-6 py-2 bg-white/5 border border-white/5 font-body text-[10px] text-white/40 uppercase tracking-[0.3em] rounded-full">{tag}</span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div className="md:col-span-3 flex md:flex-col items-end md:items-end justify-center md:pt-4">
                                     </div>
                                 </div>
-
-                                <div className="md:col-span-3 flex md:flex-col items-end md:items-end justify-center md:pt-4">
-                                </div>
-                            </div>
-                        </motion.div>
+                            </motion.div>
+                        </GlassCard>
                     ))}
                 </div>
             </div>

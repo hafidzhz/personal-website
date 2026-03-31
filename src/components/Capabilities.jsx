@@ -1,53 +1,34 @@
 import React from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import GlassCard from './GlassCard';
 
 const CapabilityCard = ({ children, title, icon: Icon, delay = 0 }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["5deg", "-5deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-5deg", "5deg"]);
-
-    const handleMouseMove = (e) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        x.set(e.clientX / width - 0.5);
-        y.set(e.clientY / height - 0.5);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ delay, duration: 1, ease: [0.19, 1, 0.22, 1] }}
-            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            className="apple-glass p-10 md:p-16 lg:p-20 flex flex-col transition-all duration-700 cursor-default rounded-[2.5rem] md:rounded-[4rem] border-white/5 relative h-full group"
+        <GlassCard 
+            tilt={true}
+            className="p-10 md:p-16 lg:p-20 flex flex-col h-full"
         >
-            <div className="flex items-center gap-6 md:gap-8 mb-12 md:mb-16 relative z-10 transition-transform duration-700 h-[80px] md:h-[100px] lg:h-[120px] items-center">
-                <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 flex items-center justify-center p-3 md:p-3.5 bg-white/5 border border-white/5 rounded-2xl shadow-sm group-hover:bg-white/10 transition-colors">
-                    {Icon}
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ delay, duration: 1, ease: [0.19, 1, 0.22, 1] }}
+                className="w-full h-full flex flex-col"
+            >
+                <div className="flex items-center gap-6 md:gap-8 mb-12 md:mb-16 relative z-10 h-[80px] md:h-[100px] lg:h-[120px] items-center">
+                    <div className="w-12 h-12 md:w-16 md:h-16 flex-shrink-0 flex items-center justify-center p-3 md:p-3.5 bg-white/5 border border-white/5 rounded-2xl shadow-sm group-hover:bg-white/10 transition-colors">
+                        {Icon}
+                    </div>
+                    <h4 className="font-body font-bold text-2xl md:text-4xl text-white tracking-tightest leading-[1.1]">
+                        {title}
+                    </h4>
                 </div>
-                <h4 className="font-body font-bold text-2xl md:text-4xl text-white tracking-tightest leading-[1.1]">
-                    {title}
-                </h4>
-            </div>
-            
-            <ul className="space-y-8 md:space-y-10 relative z-10 flex-grow">
-                {children}
-            </ul>
-        </motion.div>
+                
+                <ul className="space-y-8 md:space-y-10 relative z-10 flex-grow">
+                    {children}
+                </ul>
+            </motion.div>
+        </GlassCard>
     );
 };
 

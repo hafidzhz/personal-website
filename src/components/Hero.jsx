@@ -1,9 +1,8 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
+import GlassCard from './GlassCard';
 
 const Hero = () => {
-
-
     return (
         <section 
             className="min-h-screen flex flex-col justify-center px-4 md:px-16 py-32 md:py-48 relative overflow-hidden bg-[#030303] selection:bg-primary/30" 
@@ -113,16 +112,16 @@ const Hero = () => {
                                 { label: "Stability", val: "99.98%", unit: "uptime", color: "text-secondary" },
                                 { label: "Reach", val: "Global", unit: "distributed", color: "text-white" }
                             ].map((stat, i) => (
-                                <div 
+                                <GlassCard 
                                     key={i}
-                                    className="p-8 md:p-10 border border-white/10 bg-white/[0.03] rounded-[2rem] md:rounded-[2.5rem] apple-glass flex flex-col items-center"
+                                    className="p-8 md:p-10 border border-white/10 bg-white/[0.03] rounded-[2rem] md:rounded-[2.5rem] flex flex-col items-center"
                                 >
                                     <span className="font-body text-[9px] text-white/20 uppercase tracking-[0.4em] mb-4">{stat.label}</span>
                                     <div className="flex flex-col items-center">
                                         <span className={`font-headline font-bold text-5xl sm:text-6xl md:text-7xl text-white tracking-tighter tabular-nums ${stat.color} drop-shadow-sm`}>{stat.val}</span>
                                         <span className="font-body text-[10px] text-white/20 uppercase tracking-[0.2em] mt-2 italic">{stat.unit}</span>
                                     </div>
-                                </div>
+                                </GlassCard>
                             ))}
                         </motion.div>
                     </motion.header>

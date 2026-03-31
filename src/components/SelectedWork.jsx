@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import GlassCard from './GlassCard';
 
 const ProjectRow = ({ id, title, description, tags, metric, metricLabel, isLast }) => {
     return (
@@ -95,7 +96,7 @@ const SelectedWork = () => {
                 </div>
 
                 {/* THE UNIFIED MONOLITHIC CARD */}
-                <div className="apple-glass rounded-[2.5rem] md:rounded-[4rem] border-white/5 relative overflow-hidden">
+                <GlassCard className="rounded-[2.5rem] md:rounded-[4rem] border-white/5 relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                     
                     {projects.map((project, i) => (
@@ -107,7 +108,7 @@ const SelectedWork = () => {
                     ))}
 
                     <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-                </div>
+                </GlassCard>
             </div>
         </section>
     );
