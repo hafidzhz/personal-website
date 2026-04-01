@@ -81,8 +81,7 @@ const Navbar = () => {
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          style={{ transform: 'translateZ(0)' }}
-          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl will-change-transform"
+          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl"
         >
           {/* CURSOR SPOTLIGHT EFFECT */}
           <motion.div
