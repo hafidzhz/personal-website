@@ -3,11 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence, useMotionValue, useSpring, useScroll, useMotionValueEvent } from 'framer-motion';
 
 const Navbar = () => {
+  const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const lastScrollY = React.useRef(0);
 
   // ROBUST SCROLL TRACKING
   const { scrollY } = useScroll();
@@ -28,6 +30,30 @@ const Navbar = () => {
   };
 
   useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const deltaY = currentScrollY - lastScrollY.current;
+
+      // Snappy threshold based visibility
+      if (currentScrollY < 10) {
+        setIsVisible(true);
+      } else if (Math.abs(deltaY) > 5) { // Lower threshold for more responsiveness
+        if (deltaY < 0) {
+          setIsVisible(true);
+        } else if (deltaY > 0 && currentScrollY > 100) {
+          setIsVisible(false);
+        }
+      }
+
+      setIsScrolled(currentScrollY > 50);
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
@@ -39,18 +65,22 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[9999] w-full px-6 flex justify-center pointer-events-none">
+      <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full px-6 flex justify-center pointer-events-none">
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          initial={{ y: -100, opacity: 0 }}
+          animate={{
+            y: (isVisible || isOpen) ? (isScrolled ? 12 : 0) : -100,
+            opacity: (isVisible || isOpen) ? 1 : 0,
+            scale: isScrolled ? 0.95 : 1
+          }}
+          transition={{
+            duration: 0.25,
+            ease: [0.16, 1, 0.3, 1] // Apple-style easeOutExpo
+          }}
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`
-            apple-glass pointer-events-auto relative overflow-hidden
-            flex items-center justify-between gap-12 px-8 md:px-10 py-4 transition-all duration-700 rounded-full w-auto max-w-fit mx-auto
-            ${isScrolled ? 'scale-95 translate-y-2 bg-[#030303]/80 border-white/10 shadow-2xl backdrop-blur-2xl' : 'bg-white/[0.03] border-white/5 shadow-none backdrop-blur-md'}
-          `}
+          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl"
         >
           {/* CURSOR SPOTLIGHT EFFECT */}
           <motion.div
