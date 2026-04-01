@@ -36,16 +36,17 @@ const Navbar = () => {
 
       // Snappy threshold based visibility
       if (currentScrollY < 10) {
-        setIsVisible(true);
+        setIsVisible(prev => prev ? prev : true);
       } else if (Math.abs(deltaY) > 5) { // Lower threshold for more responsiveness
         if (deltaY < 0) {
-          setIsVisible(true);
+          setIsVisible(prev => prev ? prev : true);
         } else if (deltaY > 0 && currentScrollY > 100) {
-          setIsVisible(false);
+          setIsVisible(prev => prev ? false : prev);
         }
       }
 
-      setIsScrolled(currentScrollY > 50);
+      const scrolled = currentScrollY > 50;
+      setIsScrolled(prev => prev !== scrolled ? scrolled : prev);
       lastScrollY.current = currentScrollY;
     };
 
@@ -80,7 +81,8 @@ const Navbar = () => {
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl"
+          style={{ transform: 'translateZ(0)' }}
+          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl will-change-transform"
         >
           {/* CURSOR SPOTLIGHT EFFECT */}
           <motion.div
