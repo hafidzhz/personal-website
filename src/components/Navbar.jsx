@@ -67,21 +67,20 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-8 left-1/2 -translate-x-1/2 z-[100] w-full px-6 flex justify-center pointer-events-none">
-        <motion.div
-          initial={{ y: -100, opacity: 0 }}
-          animate={{
-            y: (isVisible || isOpen) ? (isScrolled ? 12 : 0) : -100,
-            opacity: (isVisible || isOpen) ? 1 : 0,
+        <motion.div 
+          initial={{ y: -100 }}
+          animate={{ 
+            y: (isVisible || isOpen) ? (isScrolled ? 12 : 0) : -130,
             scale: isScrolled ? 0.95 : 1
           }}
-          transition={{
-            duration: 0.25,
-            ease: [0.16, 1, 0.3, 1] // Apple-style easeOutExpo
+          transition={{ 
+            duration: 0.25, 
+            ease: [0.16, 1, 0.3, 1]
           }}
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="apple-glass pointer-events-auto relative overflow-hidden flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl"
+          className="apple-glass pointer-events-auto relative flex items-center justify-between gap-12 px-8 md:px-10 py-4 rounded-full w-auto max-w-fit mx-auto shadow-2xl"
         >
           {/* CURSOR SPOTLIGHT EFFECT */}
           <motion.div
