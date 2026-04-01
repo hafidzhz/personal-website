@@ -25,7 +25,7 @@ function ScrollToTop() {
 function App() {
   return (
     <Router>
-      <div className="bg-surface selection:bg-primary/20 overflow-x-hidden relative min-h-screen">
+      <div className="bg-surface selection:bg-primary/20 relative min-h-screen">
         <Navbar />
         <ScrollToTop />
         <div className="relative z-0">
